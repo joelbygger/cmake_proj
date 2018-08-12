@@ -1,0 +1,5 @@
+# This file contains custom rules for the tool "Include-what-you-use" (IWYU).
+
+[
+    { symbol: ["std::ifstream", private, "<fstream>", public ] }
+]
