@@ -1,5 +1,10 @@
 
 
+kolla att priv verkligen är priv.
+kolla om PRIVATE include diren spelar ngn roll.
+
+MEN ÄR EN FACTORÄy VERKLIGEN RÄTT SÄTT?
+
 CPPCHECK
 CPPLINT
 CMake prettify (cmake-format?)
