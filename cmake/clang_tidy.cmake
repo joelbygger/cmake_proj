@@ -68,18 +68,29 @@ endif()
 #   flags (via compilation database) and complain on them at every compile, annoying.
 #   We'll still get complaints on the GCC flags, but only when target is executed.
 #   We'll get color highlighting on output (only works with Make?).
+# Usage:
+#   add_clang_tidy_to_target(
+#      NAME targetNameUsedForGccToCreateANewTarget
+#      SOURCES allSources
+#      INCLUDE_PUBLIC pathToPrivateIncludeFolder
+#      INCLUDE_PRIVATE pathToPublicIncludeFolder)
 ###
 function(add_clang_tidy_to_target)
     # Extract function params.
     set(options )
     set(oneValueArgs NAME)
-    set(multiValueArgs SOURCES INCLUDE_PRIVATE)
+    set(multiValueArgs SOURCES INCLUDE_PUBLIC INCLUDE_PRIVATE)
     cmake_parse_arguments(TARGET_TIDY "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+
+    # Not sure how we can get an unparsed argument(s), but I think we want to inform user about it.
+    if(TARGET_TIDY_UNPARSED_ARGUMENTS)
+        message(WARNING "---- Unparsed arguments: " ${TARGET_TIDY_UNPARSED_ARGUMENTS} " when trying to make target:" ${TARGET_TIDY_NAME})
+    endif()
 
     if(CLANG_TIDY_EXE)
         if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             set(TARGET_NAME ${TARGET_TIDY_NAME}_clang_tidy)
-            #message("---- Adding new clang-tidy target ${TARGET_NAME} with sources: [${TARGET_TIDY_SOURCES}] and includes [${TARGET_TIDY_INCLUDE_PRIVATE}]")
+            message("---- Adding new clang-tidy target ${TARGET_NAME} with sources: [${TARGET_TIDY_SOURCES}] and includes [${TARGET_TIDY_INCLUDE_PUBLIC}] [${TARGET_TIDY_INCLUDE_PRIVATE}]")
             # Formatting.
             foreach(SRC ${TARGET_TIDY_SOURCES})
                 list(APPEND SRC_W_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${SRC})
@@ -87,16 +98,14 @@ function(add_clang_tidy_to_target)
             foreach(inc ${TARGET_TIDY_INCLUDE_PRIVATE})
                 list(APPEND ALL_INCLUDES "-I${CMAKE_CURRENT_SOURCE_DIR}/${inc}")
             endforeach()
+            foreach(inc ${TARGET_TIDY_INCLUDE_PUBLIC})
+                list(APPEND ALL_INCLUDES "-I${CMAKE_CURRENT_SOURCE_DIR}/${inc}")
+            endforeach()
 
             add_custom_target(${TARGET_NAME}
                 COMMAND ${CLANG_TIDY_EXE}
                 -p ${CMAKE_BINARY_DIR} # Locaction of the compile commands, enabled with CMAKE_EXPORT_COMPILE_COMMANDS.
-                -header-filter=.*
-                --checks="${CLANG_TIDY_CHECKS}"
-                ${CLANG_TIDY_FLAGS}
-                ${SRC_W_PATH}
-                --
-                ${ALL_INCLUDES})
+                -header-filter=.* --checks="${CLANG_TIDY_CHECKS}" ${CLANG_TIDY_FLAGS} ${SRC_W_PATH} -- ${ALL_INCLUDES})
 
         elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=${CLANG_TIDY_CHECKS}" "-header-filter=.*" "${CLANG_TIDY_FLAGS}")
