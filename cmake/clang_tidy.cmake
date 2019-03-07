@@ -4,8 +4,8 @@
 ###
 
 find_program( CLANG_TIDY_EXE
-    NAMES clang-tidy clang-tidy-6.0
-    DOC "Path to clang-tidy executeable." )
+        NAMES clang-tidy clang-tidy-6.0
+        DOC "Path to clang-tidy executeable." )
 
 ###
 # A helper function, extracts the clang-tidy version from the found binary.
@@ -34,7 +34,7 @@ else()
     if (${CLANG_TIDY_VERSION} VERSION_LESS "6.0.0")
         message("---- Clang-tidy was found, but in a version I am not sure will work, no build target for this will be added, found version: " ${CLANG_TIDY_VERSION})
     endif()
-    
+
     # Uncomment to allow clang-tidy to fix the suggestions inline, automagically.
     #set(CLANG_TIDY_FLAGS "-fix")
 
@@ -103,9 +103,9 @@ function(add_clang_tidy_to_target)
             endforeach()
 
             add_custom_target(${TARGET_NAME}
-                COMMAND ${CLANG_TIDY_EXE}
-                -p ${CMAKE_BINARY_DIR} # Locaction of the compile commands, enabled with CMAKE_EXPORT_COMPILE_COMMANDS.
-                -header-filter=.* --checks="${CLANG_TIDY_CHECKS}" ${CLANG_TIDY_FLAGS} ${SRC_W_PATH} -- ${ALL_INCLUDES})
+                    COMMAND ${CLANG_TIDY_EXE}
+                    -p ${CMAKE_BINARY_DIR} # Locaction of the compile commands, enabled with CMAKE_EXPORT_COMPILE_COMMANDS.
+                    -header-filter=.* --checks="${CLANG_TIDY_CHECKS}" ${CLANG_TIDY_FLAGS} ${SRC_W_PATH} -- ${ALL_INCLUDES})
 
         elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=${CLANG_TIDY_CHECKS}" "-header-filter=.*" "${CLANG_TIDY_FLAGS}")
@@ -115,8 +115,8 @@ function(add_clang_tidy_to_target)
             # perhaps to targets where we don't want tidy.
             # Therefore we set property CXX_CLANG_TIDY ourselves here.
             set_target_properties(
-                ${TARGET_TIDY_NAME} PROPERTIES
-                CXX_CLANG_TIDY "${DO_CLANG_TIDY}"
+                    ${TARGET_TIDY_NAME} PROPERTIES
+                    CXX_CLANG_TIDY "${DO_CLANG_TIDY}"
             )
         endif()
     endif()

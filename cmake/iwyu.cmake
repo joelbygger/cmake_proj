@@ -13,9 +13,9 @@ if(NOT iwyu_path)
 
 else()
     set(iwyu_path_and_options
-        ${iwyu_path}
-        -Xiwyu
-        --mapping_file=${CMAKE_SOURCE_DIR}/iwyu.imp)
+            ${iwyu_path}
+            -Xiwyu
+            --mapping_file=${CMAKE_SOURCE_DIR}/iwyu.imp)
 endif()
 
 ###
