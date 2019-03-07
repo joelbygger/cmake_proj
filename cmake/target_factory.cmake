@@ -104,6 +104,13 @@ function(new_cpp_executeable)
         target_link_libraries(${EXEC_NAME} PRIVATE ${EXEC_LINK_PRIVATE})
     endif()
 
+    # Create a command to execute built binary.
+    add_custom_target(${EXEC_NAME}_run
+            COMMAND ${EXEC_NAME}
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            COMMENT "Run generated binary in ${CMAKE_CURRENT_SOURCE_DIR}"
+            )
+
     # Add clang-tidy.
     add_clang_tidy_to_target(
         NAME ${EXEC_NAME}
