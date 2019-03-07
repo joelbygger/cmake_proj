@@ -9,7 +9,7 @@ find_program(iwyu_path NAMES include-what-you-use iwyu)
 # If IWYU was found, configure some variables.
 ###
 if(NOT iwyu_path)
-    message("---- Could not find the program \"include-what-you-use\", will not be added to gw_lib target.")
+    message("---- Cannot find the program \"include-what-you-use\", it will will not be added to target.")
 
 else()
     set(iwyu_path_and_options
