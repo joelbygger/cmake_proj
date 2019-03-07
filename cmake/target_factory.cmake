@@ -151,7 +151,7 @@ function(new_cpp_library_shared)
     add_library(${LIB_NAME} SHARED ${LIB_SOURCES})
 
     set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD_REQUIRED 17)
-    # We must also actually define which C standard to use.
+    # We must also actually define which C++ standard to use.
     set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
 
     target_compile_options(${LIB_NAME} PRIVATE ${MY_CXX_COMPILE_FLAGS})
