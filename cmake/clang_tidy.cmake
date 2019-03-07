@@ -27,7 +27,7 @@ endfunction()
 # If clang-tidy was found, configure some variables.
 ###
 if(NOT CLANG_TIDY_EXE)
-    message("---- Could not find clang-tidy, you won't get a build target to run clang-tidy.")
+    message("---- Cannot find \"clang-tidy\" (you won't get a build target to run clang-tidy on your sources).")
 else()
     find_clang_tidy_version(CLANG_TIDY_VERSION)
     # Older/ newer versions should work, I just have this check beacuse this is the version verified to work.

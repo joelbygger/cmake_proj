@@ -7,7 +7,7 @@ find_program(CLANG_FORMAT
         DOC "Path to clang format executable.")
 
 if(NOT CLANG_FORMAT)
-    message("---- Cannot find clang-format (you cannot use clang format)!")
+    message("---- Cannot find \"clang-format\" (you won't get a build target to run clang format on your sources).")
 else()
     # Create a list of files to format.
     # GLOB is not very nice, but it's simple, and by specifying folder we make
