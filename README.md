@@ -39,3 +39,6 @@ For Clang tidy etc. CMake will try to find it on your system. If a tool can't be
 
 ... but not thoroughly or systematically or all the time...
 Ubuntu, GCC, Clang. I have not noted the versions of the tools used... However most development was made on Ubuntu during spring 2018, and apt did not supply the latest versions of the tools at that time. If you want you can specify which versions must be used in the cmake files, e.g. instead of calling `find_program(NAMES clang-format)` use `find_program(NAMES clang-format-5.0)`. Clang-tidy had some issues and a special implementaiton is available in "cmake/clang_tidy.cmake".
+
+# Errata, a note on quality
+It has passed many months between writing code/ CMake and updating documentation. Unfortunately I believe the test applicatons (shared lib?) has not been tested. The different aditional build targets may not work under all circumstances. Running the different additional targets (clang format and what not) might result in warnings and errors, perhaps I did this to show they work?
