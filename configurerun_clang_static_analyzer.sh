@@ -6,9 +6,9 @@
 
 DIR=build_static_analysis
 # This is the version used, newer should work too.
-SCAN_BUILD=scan-build-6.0
+SCAN_BUILD=scan-build
 # Find the location of this executable, to make sure correct version is used. Maybe not needed?
-CLANG=$(command -v clang-6.0)
+CLANG=$(command -v clang)
 OUTPUT_CLANG_ANALYZE=analysis_results
 
 printf "This file should be sourced in project root.\n"
@@ -27,7 +27,5 @@ $SCAN_BUILD --use-analyzer=$CLANG cmake -DCMAKE_BUILD_TYPE=Debug ..
 #make clean
 
 # And now run the world! I guess it works with command to compile in parallell.
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make ex1 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make ex2 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make ex2_voluntary -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make ex3 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make app1 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make app2 -j16
