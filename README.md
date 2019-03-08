@@ -12,6 +12,7 @@ The project is written after my own ideas of what I think might be useful, it ha
 Register what you want to build. Build flags, additional helper targets etc. are added created automagically. To use, from your CMakeLists.txt call e.g. function `new_cpp_executeable(...)` defined in file "cmake/target_factory.cmake". Everything else in folder "cmake" can be ignored.
 
 # What it does
+
 For each thing you register to build the following targets will be created (if the tool is installed):
 
 * build
@@ -32,7 +33,7 @@ Additional tools that are not part of CMake configuration:
 
 For Clang tidy etc. CMake will try to find it on your system. If a tool can't be found a message is printed during CMake configuration and the target will not be created, this won't affect creation of targets where the tools isn't required. I.e. missing Clang tidy will only prevent the Clang tidy target to be created.
 
-# Tested...
+# Tested
 
 ... but not thoroughly or systematically or all the time...
 Ubuntu, GCC, Clang.

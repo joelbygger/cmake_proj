@@ -1,6 +1,6 @@
 
 varningar i text -> CMake varnigar
-clang statuc analyzer kräver versoin av clang, ta bort.
+clang static analyzer kräver version av clang, ta bort.
 
 The factories are a bit bloated.
 kolla att priv verkligen är priv.
@@ -14,4 +14,4 @@ Install command
 Cross compile
 OpenSSL CMake compilation file example?
 LWYU (issues with GCC)?
-Clang statiuc analyzer part of CMake instead is sh? When I tried I had issues with GCC, but worked with Clang?
+Clang static analyzer part of CMake instead is sh? When I tried I had issues with GCC, but worked with Clang?
