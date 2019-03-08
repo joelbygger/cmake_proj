@@ -7,14 +7,6 @@
 # "Global" compile options. Mostly valid also for GCC, not investigated which.
 ####
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    ###
-    # Set for all created targets. LWYU is a CMake tool.
-    # - For some reason I don't think it works with clang?
-    # - I get some warnings on things I don't know how to control, so comment
-    #   this out, you can comment in when you need it.
-    ###
-    #set(CMAKE_LINK_WHAT_YOU_USE TRUE)
-
     if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "7.0.0")
         set(MY_UNIV_COMPILE_FLAGS
                 -Wall -Wextra -Wshadow -pedantic -Wunused -Wconversion -Wsign-conversion
@@ -55,9 +47,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             )
 endif()
 
-# When building for release, strip target binary. Works with Clang and GCC.
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
-
 
 ###
 # Factory for generating executable targets.
@@ -85,7 +74,7 @@ function(new_cpp_executeable)
     add_executable(${EXEC_NAME} ${EXEC_SOURCES})
 
     set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD_REQUIRED 17)
-    # We must also actually define which C standard to use.
+    # We must also actually define which C++ standard to use.
     set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD 17)
 
     target_compile_options(${EXEC_NAME} PRIVATE ${MY_CXX_COMPILE_FLAGS})
@@ -147,7 +136,6 @@ function(new_cpp_library_shared)
         message(WARNING "---- Unparsed arguments: " ${LIB_UNPARSED_ARGUMENTS} " when trying to make target:" ${LIB_NAME})
     endif()
 
-    message("hiiyya: " ${LIB_SOURCES})
     add_library(${LIB_NAME} SHARED ${LIB_SOURCES})
 
     set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD_REQUIRED 17)
@@ -180,3 +168,17 @@ function(new_cpp_library_shared)
     add_iwyu_to_target(NAME ${LIB_NAME})
 
 endfunction()
+
+
+###
+# Set for all created targets.
+###
+
+# Link What You USe (LWYU) is a CMake tool.
+# - For some reason I don't think it works with Clang?
+# - I get some warnings on things I don't know how to control, so comment
+#   this out, you can comment in when you need it.
+#set(CMAKE_LINK_WHAT_YOU_USE TRUE)
+
+# When building for release, strip target binary. Works with Clang and GCC.
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
