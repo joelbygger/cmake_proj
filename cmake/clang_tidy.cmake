@@ -5,7 +5,7 @@
 
 find_program(CLANG_TIDY_EXE
         NAMES clang-tidy
-        DOC "Path to clang-tidy executeable.")
+        DOC "Path to clang-tidy executable.")
 
 ###
 # A helper function, extracts the clang-tidy version from the found binary.
@@ -32,7 +32,7 @@ else()
     find_clang_tidy_version(CLANG_TIDY_VERSION)
     # Older/ newer versions should work, I just have this check beacuse this is the version verified to work.
     if (${CLANG_TIDY_VERSION} VERSION_LESS "6.0.0")
-        message("---- Clang-tidy was found, but in a version I am not sure will work, no build target for this will be added, found version: " ${CLANG_TIDY_VERSION})
+        message("---- Clang-tidy was found, but in a version I am not sure will work, a build target will be added nonetheless, found version: " ${CLANG_TIDY_VERSION})
     endif()
 
     # Uncomment to allow clang-tidy to fix the suggestions inline, automagically.
