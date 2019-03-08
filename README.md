@@ -28,6 +28,7 @@ Additionally these tools will be part of the build process:
 Additional tools that are not part of CMake configuration:
 
 * Clang static analyzer (run via "configurerun_clang_static_analyzer.sh", instructions in file)
+  * Note that you **manually** must add each target you want checked to the end of the file
 
 ## If you don't have some of the tools installed
 
