@@ -164,7 +164,7 @@ function(new_cpp_library_shared)
             SOURCES ${LIB_SOURCES}
             INCLUDE_PUBLIC ${LIB_INCLUDE_PUBLIC}
             INCLUDE_PRIVATE ${LIB_INCLUDE_PRIVATE})
-    # Add IWYU
+    # Add Include What You Use (IWYU).
     add_iwyu_to_target(NAME ${LIB_NAME})
 
 endfunction()
