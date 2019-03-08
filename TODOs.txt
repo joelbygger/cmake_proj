@@ -1,7 +1,4 @@
-
-factory återanvända saker i fct mellan lib och exec
-
-The factories are a bit bloated.
+The factory concept is  a bit bloated.
 kolla att priv verkligen är priv.
 kolla om PRIVATE include diren spelar ngn roll.
 
