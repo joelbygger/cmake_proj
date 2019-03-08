@@ -3,9 +3,9 @@
 # functions that are useful when creating new build targets.
 ###
 
-find_program( CLANG_TIDY_EXE
-        NAMES clang-tidy clang-tidy-6.0
-        DOC "Path to clang-tidy executeable." )
+find_program(CLANG_TIDY_EXE
+        NAMES clang-tidy
+        DOC "Path to clang-tidy executeable.")
 
 ###
 # A helper function, extracts the clang-tidy version from the found binary.

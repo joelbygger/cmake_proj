@@ -3,7 +3,7 @@
 # Try to find Clang-format (for formatting code), and set variable that can be used by source code.
 
 find_program(CLANG_FORMAT
-        NAMES clang-format-5.0 clang-format
+        NAMES clang-format
         DOC "Path to clang format executable.")
 
 if(NOT CLANG_FORMAT)

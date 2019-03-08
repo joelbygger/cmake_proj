@@ -3,7 +3,9 @@
 # and create helper functions that are useful when creating new build targets.
 ###
 
-find_program(iwyu_path NAMES include-what-you-use iwyu)
+find_program(iwyu_path
+        NAMES include-what-you-use iwyu
+        DOC "Path to IWYU executable.")
 
 ###
 # If IWYU was found, configure some variables.
