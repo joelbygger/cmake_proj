@@ -37,4 +37,4 @@ For Clang tidy etc. CMake will try to find it on your system. If a tool can't be
 # Tested
 
 ... but not thoroughly or systematically or all the time...
-Ubuntu, GCC, Clang.
+Ubuntu, GCC, Clang. I have not noted the versions of the tools used... However most development was made on Ubuntu during spring 2018, and apt did not supply the latest versions of the tools at that time. If you want you can specify which versions must be used in the cmake files, e.g. instead of calling `find_program(NAMES clang-format)` use `find_program(NAMES clang-format-5.0)`. Clang-tidy had some issues and a special implementaiton is available in "cmake/clang_tidy.cmake".
