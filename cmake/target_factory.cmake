@@ -1,6 +1,6 @@
 
 # This file contains factorie(s) to generate executeables. Intended to make sure
-# all build targetrs gets the correct global compilation options etc.
+# all build targets gets the correct global compilation options etc.
 
 
 ###
