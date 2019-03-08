@@ -1,14 +1,13 @@
 
-varningar i text -> CMake varnigar
-clang static analyzer kräver version av clang, ta bort.
+factory återanvända saker i fct mellan lib och exec
 
 The factories are a bit bloated.
 kolla att priv verkligen är priv.
 kolla om PRIVATE include diren spelar ngn roll.
 
-CPPCHECK
+Cppcheck
 Catch
-CPPLINT
+cpplint
 CMake prettify (cmake-format?)
 Install command
 Cross compile
