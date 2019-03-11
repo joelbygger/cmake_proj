@@ -1,5 +1,8 @@
 # This file contains custom rules for the tool "Include-what-you-use" (IWYU).
 
 [
-    { symbol: ["std::ifstream", private, "<fstream>", public ] }
+    { symbol: ["std::ifstream", private, "<fstream>", public ] },
+    { include: ["<bits/fs_fwd.h>", private, "<filesystem>", public ] },
+    { include: ["<bits/fs_ops.h>", private, "<filesystem>", public ] },
+    { include: ["<bits/fs_path.h>", private, "<filesystem>", public ] }
 ]
