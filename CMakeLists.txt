@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14) # This is a version tested to work, earlier
 
 project(adventOfCode2018
         VERSION 0.0.0
-        DESCRIPTION "My solution in C++ to advent of code."
+        DESCRIPTION "CMake C++ template project with additional useful tools."
         LANGUAGES CXX)
 
 # All compile commands are written to file "compile_commands.json".
