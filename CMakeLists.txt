@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10) # This is a version tested to work, earlier
 
 project(cmake_template_cpp_proj
         VERSION 0.0.0
-        DESCRIPTION "CMake C++ template project with additinal useful tools."
+        DESCRIPTION "CMake C++ template project with additional useful tools."
         LANGUAGES CXX)
 
 # All compile commands are written to file "compile_commands.json".
