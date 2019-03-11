@@ -14,9 +14,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-include( cmake/clang_tidy.cmake)
-include( cmake/iwyu.cmake)
-include( cmake/clang_format.cmake )
-include( cmake/target_factory.cmake )
+include(cmake/clang_tidy.cmake)
+include(cmake/iwyu.cmake)
+include(cmake/clang_format.cmake)
+include(cmake/target_factory.cmake)
 
 add_subdirectory(src)
