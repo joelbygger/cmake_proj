@@ -3,42 +3,48 @@
 //
 
 #include "manager.hpp"
-#include <iostream>
-#include <sstream>
-#include <string>
 #include <cstring>
+#include <errno.h>
 #include <filesystem>
 #include <fstream>
-#include <errno.h>
+#include <iostream>
+#include <sstream>
 #include <stdexcept>
+#include <string>
 
 using namespace std;
 namespace fs = std::filesystem;
 
-namespace file {
-    bool isValidFile(const char *path);
+namespace file
+{
+    bool isValidFile(const char* path);
 }
 
-bool file::isValidFile(const char *path)
+bool file::isValidFile(const char* path)
 {
-    fs::path filepath{path};
+    fs::path filepath{ path };
     /* First make sure supplied path exists and is of a type we want. */
-    if(!filesystem::is_regular_file(filepath))
+    if (!filesystem::is_regular_file(filepath))
     {
-        if(!filesystem::exists(filepath)) {
+        if (!filesystem::exists(filepath))
+        {
             cout << "Supplied path/ file does not exist.\n";
         }
-        else {
+        else
+        {
             cout << "Supplied path exists but is not a regular file (it's a special file).\n";
         }
     }
-    else if(filesystem::is_directory(filepath)) {
+    else if (filesystem::is_directory(filepath))
+    {
         cout << "Supplied path is a directory.\n";
     }
-    else if(filesystem::is_character_file(filepath)) {
+    else if (filesystem::is_character_file(filepath))
+    {
         cout << "Supplied path is a character special file.\n";
     }
-    else {
+    else
+    {
         cout << "This seems to a an ok file.\n";
         return true;
     }
@@ -55,17 +61,19 @@ bool file::isValidFile(const char *path)
     return false;
 }
 
-void manager::manager(char const *path)
+void manager::manager(char const* path)
 {
-    if(file::isValidFile(path))
+    if (file::isValidFile(path))
     {
         std::ifstream ifs(path, std::ios::in);
-        if(!ifs) {
+        if (!ifs)
+        {
             throw std::runtime_error(std::string("Failed to open file: ") + std::strerror(errno));
         }
 
         int sum = 0;
-        while(!ifs.eof()) {
+        while (!ifs.eof())
+        {
             std::string txt;
             std::getline(ifs, txt);
             sum += std::stoi(txt);
