@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.10) # This is a version tested to work, earlier versions probably work as well.
 
-project(cmake_template_cpp_proj
+project(adventOfCode2018
         VERSION 0.0.0
-        DESCRIPTION "CMake C++ template project with additinal useful tools."
+        DESCRIPTION "My solution in C++ tp advent of code."
         LANGUAGES CXX)
 
 # All compile commands are written to file "compile_commands.json".
@@ -14,9 +14,9 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-include( cmake/clang_tidy.cmake)
-include( cmake/iwyu.cmake)
-include( cmake/clang_format.cmake )
-include( cmake/target_factory.cmake )
+include(cmake/clang_tidy.cmake)
+include(cmake/iwyu.cmake)
+include(cmake/clang_format.cmake)
+include(cmake/target_factory.cmake)
 
 add_subdirectory(src)
