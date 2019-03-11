@@ -5,16 +5,9 @@
 #ifndef CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP
 #define CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP
 
-
-#include <filesystem>
-
-namespace fs = std::filesystem;
-
-class manager {
-public:
-    manager(char const *path);
-private:
-};
+namespace manager {
+    void manager(char const *path);
+}
 
 
 #endif //CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP

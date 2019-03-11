@@ -1,4 +1,11 @@
-
+/**
+ * Objective:
+ * Sum integers.
+ *
+ * Program reads a file. A bit of error checking is applied.
+ * Contains some use of std::filesystem.
+ *
+ */
 #include <iostream>
 #include "manager.hpp"
 
@@ -14,7 +21,7 @@ int main(int argc, char **argv)
     else {
         cout << "Received path: " << argv[1] << "\n";
 
-        manager mgr(argv[1]);
+        manager::manager(argv[1]);
 
     }
     return 0;
