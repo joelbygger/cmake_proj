@@ -18,8 +18,8 @@ For each thing you register to build the following targets will be created (if t
 * build
 * run the build (for built binaries)
 * clang tidy
-* clang format
   * As a target if you use GCC, part of the build if you use Clang (more info in cmake/clang_format.cmake)
+* clang format
   * Note that files are gathered with **GLOB** -> files added after CMake configuration will not be formatted! More info in file.
 
 Additionally these tools will be part of the build process:
