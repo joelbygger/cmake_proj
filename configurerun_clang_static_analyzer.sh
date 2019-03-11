@@ -27,5 +27,4 @@ $SCAN_BUILD --use-analyzer=$CLANG cmake -DCMAKE_BUILD_TYPE=Debug ..
 #make clean
 
 # And now run the world! I guess it works with command to compile in parallell.
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make app1 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make app2 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day1 -j16
