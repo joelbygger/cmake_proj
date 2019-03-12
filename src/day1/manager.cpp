@@ -10,6 +10,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <unordered_set>
+#include <utility>
+#include <vector>
 
 namespace fs = std::filesystem;
 
@@ -41,22 +44,59 @@ namespace
 
         return false;
     }
-}
 
-void manager::manager(char const* path)
-{
-    if (file::isValidFile(path)) {
+    int sumFreqs(char const* path) // ref?
+    {
         std::ifstream ifs(path, std::ios::in);
+        int totFreq = 0;
+
         if (!ifs) {
             throw std::runtime_error(std::string("Failed to open file: ") + std::strerror(errno));
         }
 
-        int sum = 0;
         while (!ifs.eof()) {
             std::string txt;
             std::getline(ifs, txt);
-            sum += std::stoi(txt);
+            totFreq += std::stoi(txt);
         }
-        std::cout << "Accumulated sum: " << sum << ".\n";
+
+        return totFreq;
+    }
+
+    int findFirstDuplicate(char const* path) // ref?
+    {
+        std::ifstream ifs(path, std::ios::in);
+        std::vector<int> totFreqHist = { 0 };
+        auto totFreq = 0;
+
+        if (!ifs) {
+            throw std::runtime_error(std::string("Failed to open file: ") + std::strerror(errno));
+        }
+
+        std::unordered_set<int> unique = { 0 };
+        for (;;) {
+            ifs.seekg(0); // Rewind.
+            while (!ifs.eof()) {
+                std::string txt;
+                std::getline(ifs, txt);
+                totFreq += std::stoi(txt);
+                if (!unique.insert(totFreq).second) {
+                    return totFreq;
+                }
+            }
+        }
+    }
+}
+
+void manager::manager(char const* path)
+{
+    if (isValidFile(path)) {
+        auto totFreq = sumFreqs(path);
+
+        int firstDuplicate = 0;
+        firstDuplicate = findFirstDuplicate(path);
+
+        std::cout << "Accumulated frequency: " << totFreq << "\n";
+        std::cout << "First duplicate: " << firstDuplicate << "\n";
     }
 }
