@@ -1,0 +1,19 @@
+The factory concept is  a bit bloated.
+kolla att priv verkligen är priv.
+kolla om PRIVATE include diren spelar ngn roll.
+
+write in readme.md:
+- more of what's in cmake files.
+- what different tools does
+- especially on problems with incomatability clang/gcc (for some versions) and in some use cases (clang tidy) 
+
+
+Cppcheck
+Catch
+cpplint
+CMake prettify (cmake-format?)
+Install command
+Cross compile
+OpenSSL CMake compilation file example?
+LWYU (issues with GCC)?
+Clang static analyzer part of CMake instead is sh? When I tried I had issues with GCC, but worked with Clang?
