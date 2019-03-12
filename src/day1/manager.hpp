@@ -7,7 +7,7 @@
 
 namespace manager {
     void manager(char const *path);
-}
+} // namespace manager
 
 
 #endif //CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP

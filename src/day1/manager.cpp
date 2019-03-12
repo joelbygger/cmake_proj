@@ -3,60 +3,49 @@
 //
 
 #include "manager.hpp"
+#include <cerrno>
 #include <cstring>
-#include <errno.h>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 #include <stdexcept>
 #include <string>
 
-using namespace std;
 namespace fs = std::filesystem;
 
 namespace file
 {
     bool isValidFile(const char* path);
-}
+} // namespace file
 
 bool file::isValidFile(const char* path)
 {
     fs::path filepath{ path };
     /* First make sure supplied path exists and is of a type we want. */
-    if (!filesystem::is_regular_file(filepath))
+    if (!fs::is_regular_file(filepath))
     {
-        if (!filesystem::exists(filepath))
+        if (!fs::exists(filepath))
         {
-            cout << "Supplied path/ file does not exist.\n";
+            std::cout << "Supplied path/ file does not exist.\n";
         }
         else
         {
-            cout << "Supplied path exists but is not a regular file (it's a special file).\n";
+            std::cout << "Supplied path exists but is not a regular file (it's a special file).\n";
         }
     }
-    else if (filesystem::is_directory(filepath))
+    else if (fs::is_directory(filepath))
     {
-        cout << "Supplied path is a directory.\n";
+        std::cout << "Supplied path is a directory.\n";
     }
-    else if (filesystem::is_character_file(filepath))
+    else if (fs::is_character_file(filepath))
     {
-        cout << "Supplied path is a character special file.\n";
+        std::cout << "Supplied path is a character special file.\n";
     }
     else
     {
-        cout << "This seems to a an ok file.\n";
+        std::cout << "This seems to a an ok file.\n";
         return true;
     }
-
-    cout << "exists() = " << filesystem::exists(filepath) << "\n"
-         << "root_name() = " << filepath.root_name() << "\n"
-         << "root_path() = " << filepath.root_path() << "\n"
-         << "relative_path() = " << filepath.relative_path() << "\n"
-         << "parent_path() = " << filepath.parent_path() << "\n"
-         << "filename() = " << filepath.filename() << "\n"
-         << "stem() = " << filepath.stem() << "\n"
-         << "extension() = " << filepath.extension() << "\n";
 
     return false;
 }
@@ -78,8 +67,6 @@ void manager::manager(char const* path)
             std::getline(ifs, txt);
             sum += std::stoi(txt);
         }
-        cout << "Accumulated sum: " << sum << ".\n";
+        std::cout << "Accumulated sum: " << sum << ".\n";
     }
-
-    return;
 }
