@@ -13,3 +13,8 @@ GCC and Clang (partly) used.
   * Clang tidy (if GCC, will be auto part of compile when using Clang)
 
 Clang static analyzer available as separate shell-script.
+
+# Day1
+
+Currently has issues building with Clang. More info in CMakeLists.txt
+This also results in target day1_clang_tidy doesn't work.
