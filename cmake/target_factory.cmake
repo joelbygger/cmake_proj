@@ -43,6 +43,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(MY_CXX_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
             -Weverything
             -Wno-c++98-compat
+            -Wno-c++98-compat-pedantic
             -Wno-padded
             )
 endif()
@@ -106,7 +107,7 @@ function(new_cpp_executeable)
             SOURCES ${EXEC_SOURCES}
             INCLUDE_PUBLIC ${EXEC_INCLUDE_PUBLIC}
             INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE})
-    # Add IWYU
+    # Add IWYU.
     add_iwyu_to_target(NAME ${EXEC_NAME})
 
 endfunction()
