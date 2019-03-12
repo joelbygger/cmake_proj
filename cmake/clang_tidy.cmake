@@ -49,6 +49,8 @@ else()
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-default-arguments")
     # We don't need this style.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-llvm-header-guard")
+    # No need to enforce C++98 backwards compatibility.
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-clang-diagnostic-c++98-compat-pedantic")
     # I don't think this is needed for THIS project, I only got complaints on constructors.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-hicpp-explicit-conversions")
     # I think it's good with const in function declaration.
@@ -68,6 +70,10 @@ endif()
 #   flags (via compilation database) and complain on them at every compile, annoying.
 #   We'll still get complaints on the GCC flags, but only when target is executed.
 #   We'll get color highlighting on output (only works with Make?).
+#   Note: This extra target will will only work if you can also compile with Clang.
+#     I think there might be issues if Clang and GCC requires different flags, then
+#     this target won't work, e.g. when using <filesystem> as Clang and GCC uses
+#     different libs and linker flags.
 # Usage:
 #   add_clang_tidy_to_target(
 #      NAME targetNameUsedForGccToCreateANewTarget
@@ -109,11 +115,11 @@ function(add_clang_tidy_to_target)
 
         elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=${CLANG_TIDY_CHECKS}" "-header-filter=.*" "${CLANG_TIDY_FLAGS}")
-            # We could have set variable CMAKE_CXX_CLANG_TIDY, but then the 
-            # property for tidy would be added to all targets, meaning there 
-            # would be GCC warnings on compilation flags unknown to GCC, and 
-            # perhaps to targets where we don't want tidy.
-            # Therefore we set property CXX_CLANG_TIDY ourselves here.
+            # We could have set variable CMAKE_CXX_CLANG_TIDY, but then the
+            # property for tidy would be added to all targets (GCC and Clang), 
+            # meaning there would be GCC warnings on compilation flags unknown 
+            # to GCC, and perhaps to targets where we don't want tidy.
+            # Therefore we set property CXX_CLANG_TIDY manually here.
             set_target_properties(
                     ${TARGET_TIDY_NAME} PROPERTIES
                     CXX_CLANG_TIDY "${DO_CLANG_TIDY}"
