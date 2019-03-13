@@ -114,7 +114,9 @@ function(add_clang_tidy_to_target)
                     -header-filter=.* --checks="${CLANG_TIDY_CHECKS}" ${CLANG_TIDY_FLAGS} ${SRC_W_PATH} -- ${ALL_INCLUDES})
 
         elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-            set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=${CLANG_TIDY_CHECKS}" "-header-filter=.*" "${CLANG_TIDY_FLAGS}")
+            set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=${CLANG_TIDY_CHECKS}" "-header-filter=.*" ${CLANG_TIDY_FLAGS})
+            # We could have set variable CMAKE_CXX_CLANG_TIDY for all targets,
+            # but then the property for tidy would be added to all targets (GCC and Clang),
             # We could have set variable CMAKE_CXX_CLANG_TIDY, but then the
             # property for tidy would be added to all targets (GCC and Clang), 
             # meaning there would be GCC warnings on compilation flags unknown 
