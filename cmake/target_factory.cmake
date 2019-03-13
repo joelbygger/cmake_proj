@@ -74,7 +74,7 @@ function(new_cpp_executeable)
 
     add_executable(${EXEC_NAME} ${EXEC_SOURCES})
 
-    set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD_REQUIRED 17)
+    set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD_REQUIRED ON)
     # We must also actually define which C++ standard to use.
     set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD 17)
 
