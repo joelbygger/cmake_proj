@@ -3,10 +3,10 @@
 //
 
 #include "txtfile.hpp"
-#include <iostream>
 
 #if not defined(__clang__) // We are GCC, Clang also defines __GNUC__ so we must look at __clang__.
 #include <filesystem>
+#include <iostream>
 namespace fs = std::filesystem;
 #endif
 
