@@ -16,5 +16,5 @@ Clang static analyzer available as separate shell-script.
 
 # Day1
 
-Currently has issues building with Clang. More info in CMakeLists.txt
+Currently has issues building \<filesystem\> with Clang. More info in the targets CMakeLists.txt.
 This also results in target day1_clang_tidy doesn't work.
