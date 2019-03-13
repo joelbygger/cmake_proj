@@ -16,7 +16,7 @@
 
 namespace
 {
-    int sumFreqs(char const* path) // ref?
+    int sumFreqs(char const* path)
     {
         std::ifstream ifs(path, std::ios::in);
         int totFreq = 0;
@@ -34,7 +34,7 @@ namespace
         return totFreq;
     }
 
-    int findFirstDuplicate(char const* path) // ref?
+    int findFirstDuplicate(char const* path)
     {
         std::ifstream ifs(path, std::ios::in);
         std::vector<int> totFreqHist = { 0 };
