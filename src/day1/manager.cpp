@@ -3,9 +3,9 @@
 //
 
 #include "manager.hpp"
+#include "txtfile.hpp"
 #include <cerrno>
 #include <cstring>
-#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -14,37 +14,8 @@
 #include <utility>
 #include <vector>
 
-namespace fs = std::filesystem;
-
 namespace
 {
-    bool isValidFile(const char* path)
-    {
-        fs::path filepath{ path };
-
-        /* First make sure supplied path exists and is of a type we want. */
-        if (!fs::is_regular_file(filepath)) {
-            if (!fs::exists(filepath)) {
-                std::cout << "Supplied path/ file does not exist.\n";
-            }
-            else {
-                std::cout << "Supplied path exists but is not a regular file (it's a special file).\n";
-            }
-        }
-        else if (fs::is_directory(filepath)) {
-            std::cout << "Supplied path is a directory.\n";
-        }
-        else if (fs::is_character_file(filepath)) {
-            std::cout << "Supplied path is a character special file.\n";
-        }
-        else {
-            std::cout << "This seems to a an ok file.\n";
-            return true;
-        }
-
-        return false;
-    }
-
     int sumFreqs(char const* path) // ref?
     {
         std::ifstream ifs(path, std::ios::in);
@@ -86,11 +57,11 @@ namespace
             }
         }
     }
-}
+} // namespace
 
 void manager::manager(char const* path)
 {
-    if (isValidFile(path)) {
+    if (txtFile::isValid(path)) {
         auto totFreq = sumFreqs(path);
 
         int firstDuplicate = 0;
