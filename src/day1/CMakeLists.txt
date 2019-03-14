@@ -9,7 +9,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             LINK_PRIVATE ${FILESYSTEM_LIB})
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    message(STATUS "---- day1 with Clang currently doesn't work properly.
+    message("---- day1 with Clang currently doesn't work properly.
     According to interwebs <filesystem> is not part of libc++-6, it appears in libc++-7.
     At the time of writing (winter -19) Ubuntu defaults to libc++ 6.
     To get filesystem running see http://releases.llvm.org/7.0.0/projects/libcxx/docs/UsingLibcxx.html#using-filesystem-and-libc-fs
