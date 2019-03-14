@@ -111,7 +111,7 @@ function(add_clang_tidy_to_target)
             add_custom_target(${TARGET_NAME}
                     COMMAND ${CLANG_TIDY_EXE}
                     -p ${CMAKE_BINARY_DIR} # Locaction of the compile commands, enabled with CMAKE_EXPORT_COMPILE_COMMANDS.
-                    -header-filter=.* --checks="${CLANG_TIDY_CHECKS}" ${CLANG_TIDY_FLAGS} ${SRC_W_PATH} -- ${ALL_INCLUDES})
+                    -header-filter=.* --checks="${CLANG_TIDY_CHECKS}" ${CLANG_TIDY_FLAGS} ${SRC_W_PATH} ${ALL_INCLUDES})
 
         elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             set(DO_CLANG_TIDY "${CLANG_TIDY_EXE}" "-checks=${CLANG_TIDY_CHECKS}" "-header-filter=.*" ${CLANG_TIDY_FLAGS})
