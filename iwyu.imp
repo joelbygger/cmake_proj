@@ -4,5 +4,6 @@
     { symbol: ["std::ifstream", private, "<fstream>", public ] },
     { include: ["<bits/fs_fwd.h>", private, "<filesystem>", public ] },
     { include: ["<bits/fs_ops.h>", private, "<filesystem>", public ] },
-    { include: ["<bits/fs_path.h>", private, "<filesystem>", public ] }
+    { include: ["<bits/fs_path.h>", private, "<filesystem>", public ] },
+    { include: ["<memory>", public, "<map>", public ] } # No frickin idea if this is correct, but header also includes memory...
 ]
