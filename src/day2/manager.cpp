@@ -3,14 +3,11 @@
 //
 
 #include "manager.hpp"
-#include <algorithm>
 #include <cerrno>
 #include <cstring>
 #include <fstream>
-#include <functional>
 #include <iostream>
 #include <map>
-//#include <memory>
 #include <stdexcept>
 #include <string>
 #include <tuple>
