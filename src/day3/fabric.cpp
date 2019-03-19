@@ -2,8 +2,8 @@
 // Created by joel on 2019-03-19.
 //
 
-#include "claim.hpp"
 #include "fabric.hpp"
+#include "claim.hpp"
 #include <algorithm>
 #include <iostream>
 #include <iterator>
@@ -30,11 +30,11 @@ void fabric::markClaimsOnFabric(const std::vector<claim>& claims)
     For each row:
       - Mark where on row claim is. */
     for (auto c : claims) {
-        for (auto i = static_cast<size_t>(c.getTopCoord()); i < static_cast<size_t>(c.getHeightEndCoord()); i++) {
+        for (auto i = static_cast<size_t>(c.topCoord()); i < static_cast<size_t>(c.heightEndCoord()); i++) {
             auto begin = m_fabric.at(i).begin();
             auto end = m_fabric.at(i).begin();
-            std::advance(begin, c.getLeftCoord());
-            std::advance(end, c.getWidthEndCoord());
+            std::advance(begin, c.leftCoord());
+            std::advance(end, c.widthEndCoord());
             std::for_each(begin, end, [](auto& n) { ++n; });
         }
     }
