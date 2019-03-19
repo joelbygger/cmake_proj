@@ -22,6 +22,8 @@ cd $DIR
 
 # Prepare all necessary sympbols etc.
 # According to Clangs own documentation we should always run the tool on debug code, see https://clang-analyzer.llvm.org/scan-build.html.
+# NOTE: If you want to use GCC it is possible, but you might get false negatives in e.g. <memory>.
+# Compiling with Clang is therefore easier.
 $SCAN_BUILD --use-analyzer=$CLANG cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 ..
 
 #make clean
