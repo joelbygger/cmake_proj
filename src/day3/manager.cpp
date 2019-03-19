@@ -3,60 +3,17 @@
 //
 
 #include "manager.hpp"
+#include "claim.hpp"
 #include <algorithm>
-#include <cerrno>
 #include <cstring>
 #include <fstream>
-#include <iostream>
 #include <iterator>
 #include <stdexcept>
-#include <string>
 #include <tuple>
-#include <type_traits>
 #include <vector>
 
 using matrixRow = std::vector<int>;
 using matrix = std::vector<matrixRow>;
-
-// A claim, an area. Grows from top left corner od area, to the right and down.
-// i.e. top left corner is pos 0,0.
-class claim
-{
-public:
-    claim(int id, int leftCoord, int topCoord, int w, int h) : m_id(id), m_leftCoord(leftCoord), m_topCoord(topCoord), m_width(w), m_height(h) {}
-
-    void print() const
-    {
-        std::cout << "#" << m_id << " @ " << m_leftCoord << "," << m_topCoord << ": " << m_width << "x" << m_height << "\n";
-    }
-
-    auto getLeftCoord() const
-    {
-        return m_leftCoord;
-    }
-
-    auto getTopCoord() const
-    {
-        return m_topCoord;
-    }
-
-    auto getWidthEndCoord() const
-    {
-        return m_leftCoord + m_width;
-    }
-
-    auto getHeightEndCoord() const
-    {
-        return m_topCoord + m_height;
-    }
-
-private:
-    int m_id;        // ID of the claim.
-    int m_leftCoord; // How many inches from left the box starts.
-    int m_topCoord;  // How many inches from top the box starts.
-    int m_width;
-    int m_height;
-};
 
 class task1
 {
