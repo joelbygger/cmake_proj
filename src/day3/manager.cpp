@@ -4,23 +4,26 @@
 
 #include "manager.hpp"
 #include "claim.hpp"
+#include "fabric.hpp"
 #include <algorithm>
+#include <cerrno>
 #include <cstring>
 #include <fstream>
-#include <iterator>
+#include <iostream>
 #include <stdexcept>
+#include <string>
 #include <tuple>
+#include <type_traits>
 #include <vector>
 
-using matrixRow = std::vector<int>;
-using matrix = std::vector<matrixRow>;
+using claimsVec = std::vector<claim>;
 
 class task1
 {
 public:
     auto findOverlaps(char const* path)
     {
-        std::vector<claim> claims;
+        claimsVec claims;
 
         claims = fetchClaims(path);
 
@@ -30,60 +33,21 @@ public:
         std::tie(maxW, maxH) = getMaxCoordinates(claims);
         std::cout << " maxW: " << maxW << " maxH: " << maxH << "\n";
         // ... so that we can create a fabric of correct size.
-        matrix fabric(maxW, matrixRow(maxW, 0));
+        fabric santasFabric(maxH, maxW);
 
-        markClaimsOnFabric(fabric, claims);
+        santasFabric.markClaimsOnFabric(claims);
+        // santasFabric.printFabric();
 
-        // printFabric(fabric);
-
-        return countOverlaps(fabric);
+        return santasFabric.countOverlaps();
     }
 
 private:
-    int countOverlaps(const matrix& fabric) const
-    {
-        int overlaps = 0;
-        for (const auto& row : fabric) {
-            for (const auto spot : row) {
-                if (spot > 1) {
-                    overlaps++;
-                }
-            }
-        }
-        return overlaps;
-    }
-
-    // Prints a matrix, expexts the inner content to not be printable.
-    void printFabric(const matrix& fabric) const
-    {
-        for (size_t i = 0; i < fabric.at(0).size(); i++) {
-            for (size_t j = 0; j < fabric.size(); j++) {
-                std::cout << fabric.at(i).at(j);
-            }
-            std::cout << "\n";
-        }
-    }
-
-    // Marks all claims, laso noting where they overlap.
-    void markClaimsOnFabric(matrix& fabric, const std::vector<claim>& claims) const
-    {
-        /* For each claim:
-          - Places the row on hte fabric, starting on top row..
-        For each row:
-          - Mark where on row claim is. */
-        for (auto c : claims) {
-            for (auto i = static_cast<size_t>(c.getTopCoord()); i < static_cast<size_t>(c.getHeightEndCoord()); i++) {
-                auto begin = fabric.at(i).begin();
-                auto end = fabric.at(i).begin();
-                std::advance(begin, c.getLeftCoord());
-                std::advance(end, c.getWidthEndCoord());
-                std::for_each(begin, end, [](auto& n) { ++n; });
-            }
-        }
-    }
-
-    // Calculate how big santas fabric needs to be to fit all the claims.
-    std::tuple<size_t, size_t> getMaxCoordinates(const std::vector<claim>& claims) const
+    /**
+     * Calculate how big santas fabric needs to be to fit all the claims.
+     * @param claims Vector of claims.
+     * @return A tuple tuple with required width and height.
+     */
+    std::tuple<size_t, size_t> getMaxCoordinates(const claimsVec& claims) const
     {
         int maxW = 0;
         int maxH = 0;
@@ -96,10 +60,14 @@ private:
         return std::make_tuple(maxW, maxH);
     }
 
-    // Read from file.
-    std::vector<claim> fetchClaims(char const* path) const
+    /**
+     * Creates a vector of claims.
+     * @param path To a file with claims.
+     * @return The created vector.
+     */
+    claimsVec fetchClaims(char const* path) const
     {
-        std::vector<claim> claims;
+        claimsVec claims;
         std::ifstream ifs(path, std::ios::in);
 
         if (!ifs) {

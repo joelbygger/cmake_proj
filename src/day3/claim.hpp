@@ -42,11 +42,11 @@ public:
     }
 
 private:
-    int m_id; // ID of the claim.
+    int m_id;        // ID of the claim.
     int m_leftCoord; // How many inches from left the box starts.
-    int m_topCoord; // How many inches from top the box starts.
-    int m_width; // Width from left coord.
-    int m_height; // Height from top coord.
+    int m_topCoord;  // How many inches from top the box starts.
+    int m_width;     // Width from left coord.
+    int m_height;    // Height from top coord.
 };
 
 #endif // ADVENTOFCODE2018_CLAIM_HPP
