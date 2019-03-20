@@ -117,7 +117,7 @@ endfunction()
 ###
 # Factory for generating library targets.
 # Usage (from some CMakeLists.txt file):
-#    new_cpp_library(
+#    new_cpp_library_shared(
 #        NAME yourTargetName
 #        SOURCES a.cpp priv.cpp priv.hpp
 #        INCLUDE_PUBLIC pathToPublicIncludeFolder
