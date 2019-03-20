@@ -139,7 +139,7 @@ function(new_cpp_library_shared)
 
     add_library(${LIB_NAME} SHARED ${LIB_SOURCES})
 
-    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD_REQUIRED 17)
+    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD_REQUIRED ON)
     # We must also actually define which C++ standard to use.
     set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
 
