@@ -1,6 +1,7 @@
 /**
  * Objective:
  * Count overlapping squares on a larger square.
+ * Detect which claim does not overlap with anuy other claim on the large square.
  *
  * Program reads a file. A bit of error checking is applied.
  *
