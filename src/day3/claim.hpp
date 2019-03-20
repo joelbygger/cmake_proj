@@ -36,18 +36,18 @@ public:
 
     auto widthEndCoord() const
     {
-        return m_leftCoord + m_width;
+        return m_leftCoord + m_width - 1;
     }
 
     auto heightEndCoord() const
     {
-        return m_topCoord + m_height;
+        return m_topCoord + m_height - 1;
     }
 
     void setOverlapIfUnset(const bool doesOverlap)
     {
         // Don't overwrite a previously set overlap, that overlap still exists...
-        if (m_hasOverlap == HasOverlap::unknown) {
+        if (m_hasOverlap == HasOverlap::unknown || (m_hasOverlap == HasOverlap::no && doesOverlap)) {
             if (doesOverlap) {
                 m_hasOverlap = HasOverlap::yes;
             }

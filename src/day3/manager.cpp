@@ -24,9 +24,9 @@ namespace task1
         size_t maxW = 0;
         size_t maxH = 0;
         std::tie(maxW, maxH) = ::claimUtils::getMaxCoordinates(claims);
-        std::cout << " maxW: " << maxW << " maxH: " << maxH << "\n";
+        std::cout << "maxW coord: " << maxW << " maxH coord: " << maxH << "\n";
         // ... so that we can create a fabric of correct size.
-        fabric santasFabric(maxH, maxW);
+        fabric santasFabric(maxW + 1, maxH + 1); // Add 1 to get correct size, instead of max ccordinates.
 
         santasFabric.markClaimsOnFabric(claims);
         // santasFabric.printFabric();
