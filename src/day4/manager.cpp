@@ -12,6 +12,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
+#include <tuple>
 #include <vector>
 
 namespace
@@ -35,21 +36,27 @@ namespace
         return input;
     }
 
+    std::tuple<int, int, int> task1(const char* path);
+    std::tuple<int, int, int> task1(const char* path)
+    {
+        std::vector<std::string> input = readAndSortFile(path);
+
+        logs::storage logs;
+        decoder decoder(logs);
+
+        // Pars ethe logs to find how much time each elf slept.
+        for (const auto& log : input) {
+            decoder.run(log);
+        }
+
+        return logs::getMaxSleeperInfo(logs);
+    }
+
 } // namespace
 
 void manager::manager(char const* path)
 {
-    std::vector<std::string> input = readAndSortFile(path);
-
-    logs::storage logs;
-    decoder decoder(logs);
-
-    // Pars ethe logs to find how much time each elf slept.
-    for (const auto& log : input) {
-        decoder.run(log);
-    }
-
-    auto [maxSleeperId, maxSleepMinute, maxSleepTime] = logs::getMaxSleeperInfo(logs);
+    auto [maxSleeperId, maxSleepMinute, maxSleepTime] = task1(path);
 
     std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute << " maxSleepTime: " << maxSleepTime << "\n";
 }
