@@ -4,13 +4,14 @@
 
 #include "manager.hpp"
 #include "decoder.hpp"
+#include "logs.hpp"
 #include <algorithm>
+#include <cerrno>
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <map>
+#include <stdexcept>
 #include <string>
-#include <utility>
 #include <vector>
 
 namespace
@@ -40,75 +41,15 @@ void manager::manager(char const* path)
 {
     std::vector<std::string> input = readAndSortFile(path);
 
-    log::storage logs;
-
+    logs::storage logs;
     decoder decoder(logs);
 
-    for(const auto& log : input) {
-        //decoder.run(input.at(i++));
+    // Pars ethe logs to find how much time each elf slept.
+    for (const auto& log : input) {
         decoder.run(log);
     }
 
-    // size_t i = 0;
-    // while (i < input.size()) {
-    // }
-
-    /*auto str = input.at(i++);
-    while (i < input.size()) {
-        auto itPos = str.find_first_of('#');
-
-        int id = stoi(str.substr(itPos + 1));
-
-        // If ID is missing add vector of size 60 initialized to 0, if ID exists leave it be.
-        logs.try_emplace(id, 60, 0);
-
-        // Can't get Clang to accept my asserts... So I've decided to have no checks and assume file is nice.
-
-        str = input.at(i++);
-        itPos = str.find_first_of('#');
-        if (itPos == std::string::npos) // If this was not an ID-line we continue to check for sleep.
-        {
-            while (true) {
-                // itPos = str.find_first_of("falls asleep");
-                itPos = str.find_first_of(':');
-                auto asleepMin = stoi(str.substr(itPos + 1));
-
-                str = input.at(i++);
-                // itPos = str.find_first_of("wakes up");
-                itPos = str.find_first_of(':');
-                auto awakeMin = stoi(str.substr(itPos + 1));
-
-                for (int jj = asleepMin; jj < awakeMin; ++jj) {
-                    logs.at(id).at(static_cast<size_t>(jj))++;
-                }
-
-                if (i >= input.size()) {
-                    break;
-                }
-
-                str = input.at(i++);
-                itPos = str.find_first_of('#');
-                if (itPos != std::string::npos) {
-                    break;
-                }
-            }
-        }
-    }*/
-
-    // Find minute with most sleep.
-    auto maxSleeperId = 666;
-    auto maxSleepMinute = 666;
-    auto maxSleepTime = 0;
-
-    for (const auto& log : logs) {
-        for (size_t min = 0; min < log.second.size(); min++) {
-            if (maxSleepTime < log.second.at(min)) {
-                maxSleepTime = log.second.at(min);
-                maxSleepMinute = static_cast<int>(min);
-                maxSleeperId = log.first;
-            }
-        }
-    }
+    auto [maxSleeperId, maxSleepMinute, maxSleepTime] = logs::getMaxSleeperInfo(logs);
 
     std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute << " maxSleepTime: " << maxSleepTime << "\n";
 }

@@ -3,7 +3,9 @@
 //
 
 #include "decoder.hpp"
+#include <cstddef>
 #include <stdexcept>
+#include <vector>
 
 /*************************************************
  *
@@ -89,7 +91,7 @@ void decoder::runStateSupervision(const std::string& log)
     switch (m_state) {
     case states::start:
         throw std::runtime_error(std::string("I don't think we should ever be in start state when doing supervision, log: ") + log);
-        //break;
+        // break;
     case states::id: {
         auto itPos = log.find_first_of('#');
         m_currId = stoi(log.substr(itPos + 1));

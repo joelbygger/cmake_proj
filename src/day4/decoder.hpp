@@ -5,22 +5,8 @@
 #ifndef ADVENTOFCODE2018_DECODER_HPP
 #define ADVENTOFCODE2018_DECODER_HPP
 
-#include <cstring>
-#include <map>
-#include <memory>
+#include "logs.hpp"
 #include <string>
-#include <vector>
-
-namespace log
-{
-    /**
-     * Where decoded logs are stored.
-     * First: Id of the santa this log belongs to.
-     * Second: Vector of minutes (60), each will contains the
-     * number of times the elf has been asleep that minute.
-     */
-    using storage = std::map<int, std::vector<int>>;
-} // namespace log
 
 /**
  * Decodes a file with logs, places decoded stuff in storage, owned by caller.
@@ -28,7 +14,7 @@ namespace log
 class decoder
 {
 public:
-    decoder(log::storage& logs) : m_currId(0), m_state(states::start), m_logs(logs), m_asleepMin(0), m_awakeMin(0){}
+    decoder(logs::storage& logs) : m_currId(0), m_state(states::start), m_logs(logs), m_asleepMin(0), m_awakeMin(0) {}
     /**
      * Run state machine once.
      * @param log Input, a log line.
@@ -50,7 +36,7 @@ private:
 
     int m_currId;
     states m_state;
-    log::storage& m_logs;
+    logs::storage& m_logs;
     int m_asleepMin;
     int m_awakeMin;
 };
