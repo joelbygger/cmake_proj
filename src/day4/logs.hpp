@@ -20,6 +20,7 @@ namespace logs
     using storage = std::map<int, std::vector<int>>;
 
     std::tuple<int, int> getMaxSleeperInfo(const storage& logs);
+    std::tuple<int, int> getMaxFrequentSleeperInfo(const storage& logs);
 } // namespace logs
 
 #endif // ADVENTOFCODE2018_LOGS_HPP

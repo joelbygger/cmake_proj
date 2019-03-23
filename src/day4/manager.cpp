@@ -12,7 +12,6 @@
 #include <iostream>
 #include <stdexcept>
 #include <string>
-#include <tuple>
 #include <vector>
 
 namespace
@@ -36,28 +35,30 @@ namespace
         return input;
     }
 
-    std::tuple<int, int> task1(const char* path);
-    std::tuple<int, int> task1(const char* path)
-    {
-        std::vector<std::string> input = readAndSortFile(path);
-
-        logs::storage logs;
-        decoder decoder(logs);
-
-        // Pars ethe logs to find how much time each elf slept.
-        for (const auto& log : input) {
-            decoder.run(log);
-        }
-
-        return logs::getMaxSleeperInfo(logs);
-    }
-
 } // namespace
 
 void manager::manager(char const* path)
 {
-    auto [maxSleeperId, maxSleepMinute] = task1(path);
+    // Gather all data, common for all tasks today.
+    std::vector<std::string> input = readAndSortFile(path);
 
-    std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute
-              << " maxSleeperId * maxSleepMinute: " << (maxSleeperId * maxSleepMinute) << "\n";
+    logs::storage logs;
+    decoder decoder(logs);
+
+    // Pars ethe logs to find how much time each elf slept.
+    for (const auto& log : input) {
+        decoder.run(log);
+    }
+
+    // Task 1.
+    auto [maxSleeperId, maxSleeperMinute] = logs::getMaxSleeperInfo(logs);
+
+    // Task 2.
+    auto [maxFrequentSleeperId, maxFrequentsleeperMinute] = logs::getMaxFrequentSleeperInfo(logs);
+
+    std::cout << "Task1: maxSleeperId: " << maxSleeperId << " maxSleeperMinute: " << maxSleeperMinute
+              << " maxSleeperId * maxSleeperMinute: " << (maxSleeperId * maxSleeperMinute) << "\n";
+
+    std::cout << "Task2: maxFrequentSleeperId: " << maxFrequentSleeperId << " maxFrequentsleeperMinute: " << maxFrequentsleeperMinute
+              << " sum: " << maxFrequentSleeperId * maxFrequentsleeperMinute << "\n";
 }

@@ -36,3 +36,23 @@ std::tuple<int, int> logs::getMaxSleeperInfo(const storage& logs)
 
     return std::make_tuple(maxSleeperId, maxSleeperMinute);
 }
+
+// Find the ID and minut of elf that sleeps the most times on a minute.
+std::tuple<int, int> logs::getMaxFrequentSleeperInfo(const logs::storage& logs)
+{
+    auto maxSleeperId = 666;
+    auto maxSleeperTime = 0;
+    auto maxSleeperMinute = 0;
+
+    for (const auto& log : logs) {
+        for (size_t min = 0; min < log.second.size(); min++) {
+            if (maxSleeperTime < log.second.at(min)) {
+                maxSleeperTime = log.second.at(min);
+                maxSleeperMinute = static_cast<int>(min);
+                maxSleeperId = log.first;
+            }
+        }
+    }
+
+    return std::make_tuple(maxSleeperId, maxSleeperMinute);
+}
