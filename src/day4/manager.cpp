@@ -58,5 +58,6 @@ void manager::manager(char const* path)
 {
     auto [maxSleeperId, maxSleepMinute, maxSleepTime] = task1(path);
 
-    std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute << " maxSleepTime: " << maxSleepTime << "\n";
+    std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute << " maxSleepTime: " << maxSleepTime
+              << " maxSleeperId * maxSleepMinute: " << (maxSleeperId * maxSleepMinute) << "\n";
 }
