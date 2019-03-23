@@ -36,8 +36,8 @@ namespace
         return input;
     }
 
-    std::tuple<int, int, int> task1(const char* path);
-    std::tuple<int, int, int> task1(const char* path)
+    std::tuple<int, int> task1(const char* path);
+    std::tuple<int, int> task1(const char* path)
     {
         std::vector<std::string> input = readAndSortFile(path);
 
@@ -56,8 +56,8 @@ namespace
 
 void manager::manager(char const* path)
 {
-    auto [maxSleeperId, maxSleepMinute, maxSleepTime] = task1(path);
+    auto [maxSleeperId, maxSleepMinute] = task1(path);
 
-    std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute << " maxSleepTime: " << maxSleepTime
+    std::cout << "maxSleeperId: " << maxSleeperId << " maxSleepMinute: " << maxSleepMinute
               << " maxSleeperId * maxSleepMinute: " << (maxSleeperId * maxSleepMinute) << "\n";
 }
