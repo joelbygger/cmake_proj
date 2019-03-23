@@ -30,8 +30,7 @@ private:
         start,
         id,
         sleep,
-        awake,
-        end
+        awake
     };
 
     int m_currId;

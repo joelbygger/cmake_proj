@@ -79,15 +79,11 @@ void decoder::runStateTransitions(const std::string& log)
         }
         break;
     }
-
-    case states::end:
-        break;
     }
 }
 
 void decoder::runStateSupervision(const std::string& log)
 {
-
     switch (m_state) {
     case states::start:
         throw std::runtime_error(std::string("I don't think we should ever be in start state when doing supervision, log: ") + log);
@@ -114,7 +110,5 @@ void decoder::runStateSupervision(const std::string& log)
         }
         break;
     }
-    case states::end:
-        break;
     }
 }
