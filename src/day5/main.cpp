@@ -1,5 +1,5 @@
 /**
- * 
+ *
  * Program reads a file. A bit of error checking is applied.
  *
  */
