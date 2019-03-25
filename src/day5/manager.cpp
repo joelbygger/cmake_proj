@@ -32,15 +32,28 @@ void manager::manager(char const* path)
 
     // Returns true if same char but different capitalization.
     auto compare = [](const char& x, const char& y) -> bool { return (std::toupper(x) == std::toupper(y) && x != y); };
+    auto searchIt = polymer.begin();
     while (true) {
-        auto it = std::adjacent_find(polymer.begin(), polymer.end(), compare);
-        if (it != polymer.end()) {
-            auto it2 = it;
-            std::advance(it2, 2);
-            polymer.erase(it, it2);
+        auto findIt = std::adjacent_find(searchIt, polymer.end(), compare);
+        if (findIt == polymer.end()) {
+            if (searchIt != polymer.begin()) {
+                // Found nothing, restart search, we might not have searched form begining.
+                searchIt = polymer.begin();
+            }
+            else {
+                break; // Didn't find anything, we're done.
+            }
         }
         else {
-            break;
+            auto it2 = findIt;
+            std::advance(it2, 2);
+
+            searchIt = polymer.erase(findIt, it2);
+
+            if (searchIt == polymer.end()) {
+                // We erased last element, restart search from beginning.
+                searchIt = polymer.begin();
+            }
         }
     }
 
