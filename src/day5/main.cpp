@@ -1,7 +1,5 @@
 /**
- * Objective:
- * Given a list of guard ID's with info on when they sleep, detect when it's most likely a guard is asleep.
- *
+ * 
  * Program reads a file. A bit of error checking is applied.
  *
  */
