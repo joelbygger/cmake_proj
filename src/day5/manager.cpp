@@ -42,8 +42,9 @@ namespace
     /**
      * Remove all adjacent duplicates: same letter but different capitilization.
      * @param polymer A lot of chars...
+     * @return Resulting size.
      */
-    void reducePolymer(std::vector<char>& polymer)
+    auto reducePolymer(std::vector<char> polymer)
     {
         // Returns true if same char but different capitalization.
         auto compare = [](const char& x, const char& y) -> bool { return (toupper(x) == toupper(y) && x != y); };
@@ -72,6 +73,20 @@ namespace
                 }
             }
         }
+
+        return polymer.size();
+    }
+
+    /**
+     * First remove all occurences of a character and then try to reduce the polymer.
+     * @param rem What to remove.
+     * @param polymer What to work on.
+     * @return Resulting size.
+     */
+    auto removeReduce (const char rem, std::vector<char> polymer){
+        polymer.erase(std::remove(polymer.begin(), polymer.end(), rem), polymer.end());
+        polymer.erase(std::remove(polymer.begin(), polymer.end(), toupper(rem)), polymer.end());
+        return reducePolymer(polymer);
     }
 } // namespace
 
@@ -82,8 +97,19 @@ void manager::manager(char const* path)
     // Read the file.
     polymer = getInput(path);
 
-    std::cout << "polymer.size(): " << polymer.size() << "\n";
-    reducePolymer(polymer);
+    std::cout << "Original polymer.size(): " << polymer.size() << "\n";
+    std::cout << "Reduced polymer: " << reducePolymer(polymer) << "\n";
 
-    std::cout << "polymer.size(): " << polymer.size() << "\n";
+    // Now try to remove characters to find the char to remove to achieve minimum,
+    auto charRemForMin = 'a';
+    size_t minSz = 99999;
+    for(char x = 'a'; x <= 'z'; x++) {
+        auto sz = removeReduce(x, polymer);
+        if(sz < minSz) {
+            minSz = sz;
+            charRemForMin = x;
+        }
+    }
+
+    std::cout << "Min polymer reached when removing: " << charRemForMin << " and size is: " << minSz << "\n";
 }
