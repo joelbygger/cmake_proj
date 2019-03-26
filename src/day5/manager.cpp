@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -76,18 +77,6 @@ namespace
 
         return polymer.size();
     }
-
-    /**
-     * First remove all occurences of a character and then try to reduce the polymer.
-     * @param rem What to remove.
-     * @param polymer What to work on.
-     * @return Resulting size.
-     */
-    auto removeReduce (const char rem, std::vector<char> polymer){
-        polymer.erase(std::remove(polymer.begin(), polymer.end(), rem), polymer.end());
-        polymer.erase(std::remove(polymer.begin(), polymer.end(), toupper(rem)), polymer.end());
-        return reducePolymer(polymer);
-    }
 } // namespace
 
 void manager::manager(char const* path)
@@ -101,15 +90,12 @@ void manager::manager(char const* path)
     std::cout << "Reduced polymer: " << reducePolymer(polymer) << "\n";
 
     // Now try to remove characters to find the char to remove to achieve minimum,
-    auto charRemForMin = 'a';
-    size_t minSz = 99999;
+    size_t minSz = std::numeric_limits<size_t>::max();
     for(char x = 'a'; x <= 'z'; x++) {
-        auto sz = removeReduce(x, polymer);
-        if(sz < minSz) {
-            minSz = sz;
-            charRemForMin = x;
-        }
+        auto p{polymer};
+        p.erase(std::remove_if(p.begin(), p.end(), [=](const auto unit){return std::tolower(unit) == x;}), p.end());
+        minSz = std::min(minSz, reducePolymer(p));
     }
 
-    std::cout << "Min polymer reached when removing: " << charRemForMin << " and size is: " << minSz << "\n";
+    std::cout << "Min polymer sz: " << minSz << "\n";
 }
