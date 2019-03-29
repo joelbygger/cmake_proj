@@ -3,7 +3,7 @@
  * Program reads a file. A bit of error checking is applied.
  *
  */
-#include "manager.hpp"
+#include "polymer.hpp"
 #include <iostream>
 
 int main(int argc, char** argv)
@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     else {
         std::cout << "Received path: " << argv[1] << "\n";
 
-        manager::manager(argv[1]);
+        polymer::manager(argv[1]);
     }
     return 0;
 }
