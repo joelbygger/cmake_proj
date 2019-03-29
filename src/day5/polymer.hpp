@@ -2,8 +2,8 @@
 // Created by joel on 2019-03-24.
 //
 
-#ifndef ADVENTOFCODE2018_MANAGER_HPP
-#define ADVENTOFCODE2018_MANAGER_HPP
+#ifndef ADVENTOFCODE2018_POLYMER_HPP
+#define ADVENTOFCODE2018_POLYMER_HPP
 
 #include <cstddef>
 #include <tuple>
@@ -24,6 +24,6 @@ namespace polymer
      * @return First the reduced poölymer in the file, second the smallest reduced polymer if all occurences of a char is removed. Which char to remove is evaluated.
      */
     std::tuple<int, int> manager(char const* path);
-} // namespace manager
+} // namespace polymer
 
-#endif // ADVENTOFCODE2018_MANAGER_HPP
+#endif // ADVENTOFCODE2018_POLYMER_HPP
