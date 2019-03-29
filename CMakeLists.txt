@@ -13,7 +13,7 @@ if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release CACHE String "No build type set, we default to release." FORCE)
 endif()
 
-
+include(cmake/catch.cmake)
 include(cmake/clang_tidy.cmake)
 include(cmake/iwyu.cmake)
 include(cmake/clang_format.cmake)
