@@ -1,5 +1,5 @@
 
-# This file contains factorie(s) to generate executeables. Intended to make sure
+# This file contains factorie(s) to generate executables. Intended to make sure
 # all build targets gets the correct global compilation options etc.
 
 
@@ -52,7 +52,7 @@ endif()
 ###
 # Factory for generating executable targets.
 # Usage (from some CMakeLists.txt file):
-#    new_cpp_executeable(
+#    new_cpp_executable(
 #        NAME yourTargetName
 #        SOURCES a.cpp priv.cpp priv.hpp
 #        INCLUDE_PUBLIC pathToPublicIncludeFolder
@@ -60,7 +60,7 @@ endif()
 #        LINK_PUBLIC different target withPublicLinkage
 #        LINK_PRIVATE different target withPrivateLinkage)
 ###
-function(new_cpp_executeable)
+function(new_cpp_executable)
     # Extract function params.
     set(options)
     set(oneValueArgs NAME)
