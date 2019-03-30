@@ -15,7 +15,7 @@ endif()
 
 
 include(factories/utest.cmake)
-include(factories/executeable_and_lib.cmake)
+include(factories/executable_and_lib.cmake)
 include(external/clang_tidy.cmake)
 include(external/iwyu.cmake)
 include(external/clang_format.cmake)
