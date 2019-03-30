@@ -1,4 +1,7 @@
-# Adds a target to run unit tests, currently with Catch unit test framework.
+
+# This file contains a factory to generate build targets for unit tests, currently with Catch unit test framework.
+# There is a lot of bioler plate, functionality to create target is reused from other factory, the main purpose of this
+# factory is to remove the need to add the testing framework and register the created binary to CTest.
 
 # Activate CTest.
 enable_testing()
@@ -6,6 +9,7 @@ enable_testing()
 
 ###
 # Factory for generating executable test targets. Will add the Catch library automagically.
+# The created binaries will be added to CTest.
 # Usage (from some CMakeLists.txt file):
 #    new_cpp_utest_executable(
 #        NAME yourTargetName
