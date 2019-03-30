@@ -1,6 +1,6 @@
 
-# This file contains factorie(s) to generate executables. Intended to make sure
-# all build targets gets the correct global compilation options etc.
+# This file contains factories to generate build targets. Intended to make sure
+# all build targets gets the correct global compilation options, tooling etc.
 
 
 ###
