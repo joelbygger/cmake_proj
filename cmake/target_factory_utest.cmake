@@ -7,13 +7,13 @@ enable_testing()
 ###
 # Factory for generating executable test targets. Will add the Catch library automagically.
 # Usage (from some CMakeLists.txt file):
-#    new_cpp_utest_executeable(
+#    new_cpp_utest_executable(
 #        NAME yourTargetName
 #        SOURCES a.cpp priv.cpp priv.hpp
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
 #        LINK_PRIVATE yourCUT and other target withPrivateLinkage)
 ###
-function(new_cpp_utest_executeable)
+function(new_cpp_utest_executable)
     # Extract function params.
     set(options)
     set(oneValueArgs NAME)
@@ -26,7 +26,7 @@ function(new_cpp_utest_executeable)
     endif()
 
     # Use existing factory to make sure all compiler warnings etc. are included.
-    new_cpp_executeable(
+    new_cpp_executable(
             NAME ${EXEC_NAME}
             SOURCES ${EXEC_SOURCES}
             INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE}
