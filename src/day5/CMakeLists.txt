@@ -13,5 +13,5 @@ new_cpp_executable(
 # Tests for the logic.
 new_cpp_utest_executable(
         NAME day5libTest
-        SOURCES test.cpp test2.cpp
+        SOURCES test.cpp input.hpp
         LINK_PRIVATE day5lib)

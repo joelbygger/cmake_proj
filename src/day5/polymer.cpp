@@ -5,14 +5,10 @@
 #include "polymer.hpp"
 #include <algorithm>
 #include <cctype>
-#include <cerrno>
-#include <cstring>
-#include <fstream>
+#include <cstddef>
 #include <iostream>
 #include <iterator>
 #include <limits>
-#include <stdexcept>
-#include <string>
 #include <type_traits>
 #include <utility>
 #include <vector>
@@ -20,74 +16,46 @@
 namespace
 {
     /**
-     * Reads from file.
-     * @param path PAth to file.
-     * @return File data to be used.
+     * Remove all adjacent duplicates: same letter but different capitilization.
+     * @param polymer A lot of chars...
+     * @return Resulting size.
      */
-    std::vector<char> getInput(const char* path)
+    size_t reduce(std::vector<char> polymer)
     {
-        std::ifstream ifs(path, std::ios_base::in);
-        if (!ifs) {
-            throw std::runtime_error(std::string("Failed to open file: ") + std::strerror(errno));
-        }
+        // Returns true if same char but different capitalization.
+        auto compare = [](const char& x, const char& y) -> bool { return (toupper(x) == toupper(y) && x != y); };
 
-        std::vector<char> polymer;
-
-        // Read the file.
-        char c;
-        while (ifs.get(c)) {
-            polymer.emplace_back(c);
-        }
-
-        return polymer;
-    }
-
-} // namespace
-
-/**
- * Remove all adjacent duplicates: same letter but different capitilization.
- * @param polymer A lot of chars...
- * @return Resulting size.
- */
-size_t polymer::reduce(std::vector<char> polymer)
-{
-    // Returns true if same char but different capitalization.
-    auto compare = [](const char& x, const char& y) -> bool { return (toupper(x) == toupper(y) && x != y); };
-
-    auto searchIt = polymer.begin();
-    while (true) {
-        auto findIt = adjacent_find(searchIt, polymer.end(), compare);
-        if (findIt == polymer.end()) {
-            if (searchIt != polymer.begin()) {
-                // Found nothing, restart search, we might not have searched form begining.
-                searchIt = polymer.begin();
+        auto searchIt = polymer.begin();
+        while (true) {
+            auto findIt = adjacent_find(searchIt, polymer.end(), compare);
+            if (findIt == polymer.end()) {
+                if (searchIt != polymer.begin()) {
+                    // Found nothing, restart search, we might not have searched form begining.
+                    searchIt = polymer.begin();
+                }
+                else {
+                    break; // Didn't find anything, we're done.
+                }
             }
             else {
-                break; // Didn't find anything, we're done.
+                auto it2 = findIt;
+                advance(it2, 2);
+
+                searchIt = polymer.erase(findIt, it2);
+
+                if (searchIt == polymer.end()) {
+                    // We erased last element, restart search from beginning.
+                    searchIt = polymer.begin();
+                }
             }
         }
-        else {
-            auto it2 = findIt;
-            advance(it2, 2);
 
-            searchIt = polymer.erase(findIt, it2);
-
-            if (searchIt == polymer.end()) {
-                // We erased last element, restart search from beginning.
-                searchIt = polymer.begin();
-            }
-        }
+        return polymer.size();
     }
+} // namespace
 
-    return polymer.size();
-}
-
-std::tuple<int, int> polymer::manager(char const* path)
+std::tuple<int, int> polymer::manager(std::vector<char>& polymer)
 {
-    std::vector<char> polymer;
-
-    // Read the file.
-    polymer = getInput(path);
     const auto task1Sz = reduce(polymer);
 
     std::cout << "Original polymer.size(): " << polymer.size() << "\n";
