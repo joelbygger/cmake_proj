@@ -7,7 +7,7 @@
 # "Global" compile options. Mostly valid also for GCC, not investigated which.
 ####
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "7.0.0")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "7.3.0")
         set(MY_UNIV_COMPILE_FLAGS
                 -Wall -Wextra -Wshadow -pedantic -Wunused -Wconversion -Wsign-conversion
                 -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op
@@ -34,7 +34,32 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                 )
 
         set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
-        #set(MY_C_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS} -Wjump-misses-init  -Wstrict-prototypes -Wmissing-prototypes)
+
+        if(ASAN) # True if CMake called with -DASAN=1.
+            message("---- Compiling with address sanitizers.")
+            set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+                    -fsanitize=address # Implicitly activates sanitize=leak.
+                    -fsanitize-address-use-after-scope
+                    -fno-omit-frame-pointer
+                    -fno-common)
+
+            # Also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2
+            set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS} -fsanitize=pointer-compare -fsanitize=pointer-subtract)
+
+            # ASAN must come first in list.
+            set(EXTRA_LINKER_LIBS -fsanitize=address ${EXTRA_LINKER_LIBS})
+
+        elseif(TSAN) # True if CMake called with -DTSAN=1.
+            # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
+            message("---- Compiling with thread sanitizers.")
+            set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+                    -fsanitize=thread
+                    -fno-omit-frame-pointer)
+
+            set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
+        endif()
+
+
         set(MY_CXX_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS} -Wuseless-cast)
     endif()
 
