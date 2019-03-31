@@ -1,0 +1,4 @@
+* ta bort run targets
+* asan, ubsan etc. clang
+
+* catch add_library andvända fabriken?

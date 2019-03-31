@@ -3,7 +3,7 @@
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(FILESYSTEM_LIB -lstdc++fs) # Won't be needed with GCC 9 (?).
 
-    new_cpp_executeable(
+    new_cpp_executable(
             NAME day1
             SOURCES main.cpp manager.cpp manager.hpp txtfile.cpp txtfile.hpp
             LINK_PRIVATE ${FILESYSTEM_LIB})
@@ -19,7 +19,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     - Search for #if defined(__clang__) in the code where <filesystem> is used.
     To see what lib is available:$ /sbin/ldconfig -p | grep stdc++")
 
-    new_cpp_executeable(
+    new_cpp_executable(
             NAME day1
             SOURCES main.cpp manager.cpp manager.hpp txtfile.cpp txtfile.hpp)
 endif()

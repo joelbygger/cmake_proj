@@ -64,7 +64,7 @@ endif()
 
 
 ###
-# Adds clang-tidy to an executeable, can handle both GCC ang Clang as target compiler.
+# Adds clang-tidy to an executable, can handle both GCC ang Clang as target compiler.
 # - For Clang, uses clang-tidy integration in CMake, will be executed on each compile.
 # - For GCC. adds a new target that only runs clang-tidy. Because Clang will see GCC
 #   flags (via compilation database) and complain on them at every compile, annoying.

@@ -5,9 +5,13 @@
 #ifndef CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP
 #define CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP
 
+#include <string>
+#include <tuple>
+#include <vector>
+
 namespace manager
 {
-    void manager(char const* path);
+    std::tuple<int, std::string> manager(const std::vector<std::string>& ids);
 } // namespace manager
 
 #endif // CMAKE_TEMPLATE_CPP_PROJ_MANAGER_HPP
