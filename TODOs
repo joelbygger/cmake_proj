@@ -2,3 +2,4 @@
 * asan, ubsan etc. clang
 
 * catch add_library andvända fabriken?
+* clang_tidy with clang config
