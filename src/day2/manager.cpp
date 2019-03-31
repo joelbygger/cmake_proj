@@ -8,9 +8,8 @@
 #include <map>
 #include <stdexcept>
 #include <string>
-#include <tuple>
+#include <type_traits>
 #include <utility>
-#include <vector>
 
 class task1
 {
@@ -104,7 +103,7 @@ private:
     }
 };
 
-void manager::manager(std::vector<std::string> ids)
+std::tuple<int, std::string> manager::manager(const std::vector<std::string>& ids)
 {
     task1 tsk1;
     task2 tsk2;
@@ -113,4 +112,6 @@ void manager::manager(std::vector<std::string> ids)
 
     std::cout << "Hash: " << hash << "\n";
     std::cout << "ID: " << id << "\n";
+
+    return std::make_pair(hash, id);
 }
