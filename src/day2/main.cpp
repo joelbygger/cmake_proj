@@ -6,7 +6,10 @@
  *
  */
 #include "manager.hpp"
+#include <fstream>
 #include <iostream>
+#include <string>
+#include <vector>
 
 int main(int argc, char** argv)
 {
@@ -17,7 +20,23 @@ int main(int argc, char** argv)
     else {
         std::cout << "Received path: " << argv[1] << "\n";
 
-        manager::manager(argv[1]);
+        std::ifstream ifs(argv[1], std::ios::in);
+        if (!ifs) {
+            std::cout << "Failed to open file.\n";
+        }
+
+        std::vector<std::string> ids;
+        while (!ifs.eof()) {
+            std::string txt;
+            std::getline(ifs, txt);
+            if (txt.length() != 0) {
+                ids.push_back(txt);
+            }
+        }
+
+        if (!ids.empty()) {
+            manager::manager(ids);
+        }
     }
     return 0;
 }

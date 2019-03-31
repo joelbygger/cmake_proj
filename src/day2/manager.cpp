@@ -3,9 +3,7 @@
 //
 
 #include "manager.hpp"
-#include <cerrno>
 #include <cstring>
-#include <fstream>
 #include <iostream>
 #include <map>
 #include <stdexcept>
@@ -18,21 +16,12 @@ class task1
 {
 public:
     // Calc hash on entire file.
-    int calcHash(char const* path)
+    int calcHash(std::vector<std::string> ids)
     {
-        std::ifstream ifs(path, std::ios::in);
-
-        if (!ifs) {
-            throw std::runtime_error(std::string("Failed to open file: ") + std::strerror(errno));
-        }
-
         // Go through file.
         int accumulatedTwos = 0;
         int accumulatedThrees = 0;
-        while (!ifs.eof()) {
-            std::string txt;
-            std::getline(ifs, txt);
-
+        for (const auto& txt : ids) {
             // Creates a map from chars in a string, value in map is counted occurences.
             std::map<char, int> mp;
             for (auto& c : txt) {
@@ -72,23 +61,8 @@ class task2
 {
 public:
     // Find two Ids that only differs on one char.
-    std::string findCommonIds(char const* path)
+    std::string findCommonIds(std::vector<std::string> ids)
     {
-        std::ifstream ifs(path, std::ios::in);
-
-        if (!ifs) {
-            throw std::runtime_error(std::string("Failed to open file: ") + std::strerror(errno));
-        }
-
-        std::vector<std::string> ids;
-        while (!ifs.eof()) {
-            std::string txt;
-            std::getline(ifs, txt);
-            if (txt.length() != 0) {
-                ids.push_back(txt);
-            }
-        }
-
         if (!allSameLen(ids)) {
             throw std::runtime_error(std::string("Bad file contents."));
         }
@@ -130,12 +104,12 @@ private:
     }
 };
 
-void manager::manager(char const* path)
+void manager::manager(std::vector<std::string> ids)
 {
     task1 tsk1;
     task2 tsk2;
-    auto hash = tsk1.calcHash(path);
-    auto id = tsk2.findCommonIds(path);
+    auto hash = tsk1.calcHash(ids);
+    auto id = tsk2.findCommonIds(ids);
 
     std::cout << "Hash: " << hash << "\n";
     std::cout << "ID: " << id << "\n";
