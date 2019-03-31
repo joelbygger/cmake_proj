@@ -17,17 +17,18 @@ namespace
      */
     std::vector<char> getInput(const char* path)
     {
+        std::vector<char> polymer;
+
         std::ifstream ifs(path, std::ios_base::in);
         if (!ifs) {
             std::cout << "Failed to open file.\n";
         }
-
-        std::vector<char> polymer;
-
-        // Read the file.
-        char c;
-        while (ifs.get(c)) {
-            polymer.emplace_back(c);
+        else {
+            // Read the file.
+            char c;
+            while (ifs.get(c)) {
+                polymer.emplace_back(c);
+            }
         }
 
         return polymer;
