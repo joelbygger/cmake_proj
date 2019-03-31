@@ -34,7 +34,7 @@ function(new_cpp_utest_executable)
             NAME ${EXEC_NAME}
             SOURCES ${EXEC_SOURCES}
             INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE}
-            LINK_PRIVATE ${EXEC_LINK_PRIVATE} Catch) # Here we add Catch library, if another utest framework is desired, change this.
+            LINK_PRIVATE ${EXEC_LINK_PRIVATE} Catch catchMainlib) # Here we add Catch library, if another utest framework is desired, change this.
 
     # Report executable to CTest.
     add_test(
