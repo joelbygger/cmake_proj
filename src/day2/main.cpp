@@ -24,18 +24,19 @@ int main(int argc, char** argv)
         if (!ifs) {
             std::cout << "Failed to open file.\n";
         }
-
-        std::vector<std::string> ids;
-        while (!ifs.eof()) {
-            std::string txt;
-            std::getline(ifs, txt);
-            if (txt.length() != 0) {
-                ids.push_back(txt);
+        else {
+            std::vector<std::string> ids;
+            while (!ifs.eof()) {
+                std::string txt;
+                std::getline(ifs, txt);
+                if (txt.length() != 0) {
+                    ids.push_back(txt);
+                }
             }
-        }
 
-        if (!ids.empty()) {
-            manager::manager(ids);
+            if (!ids.empty()) {
+                manager::manager(ids);
+            }
         }
     }
     return 0;
