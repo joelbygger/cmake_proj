@@ -4,7 +4,7 @@
 
 
 ###
-# "Global" compile options. Mostly valid also for GCC, not investigated which.
+# "Global" compile options.
 ####
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "7.3.0")
@@ -14,7 +14,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                 -Wnull-dereference -Wdouble-promotion -Wformat=2
                 -Wrestrict -Wpointer-arith -Wcast-qual
                 -Wswitch-bool -Wswitch-enum
-                -Winline )
+                -Winline)
         # I think it can be argued that the warnings below should only be part of Debug build,
         # but I think they can be part of release.
         set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
@@ -59,7 +59,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
         endif()
 
-
         set(MY_CXX_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS} -Wuseless-cast)
     endif()
 
@@ -72,6 +71,24 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             -Wno-padded
             )
 endif()
+
+
+###
+# Settings & Compile options for all created targets, no matter compiler.
+###
+# Link What You Use (LWYU) is a CMake tool.
+# - For some reason I don't think it works with Clang?
+# - I get some warnings on things I don't know how to control, so comment
+#   this out, you can comment in when you need it.
+#set(CMAKE_LINK_WHAT_YOU_USE TRUE)
+
+# When building for release, strip target binary. Works with Clang and GCC.
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
+
+
+
+
+
 
 
 ###
@@ -194,17 +211,3 @@ function(new_cpp_library_shared)
     add_iwyu_to_target(NAME ${LIB_NAME})
 
 endfunction()
-
-
-###
-# Set for all created targets.
-###
-
-# Link What You USe (LWYU) is a CMake tool.
-# - For some reason I don't think it works with Clang?
-# - I get some warnings on things I don't know how to control, so comment
-#   this out, you can comment in when you need it.
-#set(CMAKE_LINK_WHAT_YOU_USE TRUE)
-
-# When building for release, strip target binary. Works with Clang and GCC.
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
