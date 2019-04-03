@@ -93,7 +93,7 @@ Implemented in [factories/settings/flags.cmake](factories/settings/flags.cmake),
 
 ## Incorrect STL usage
 
-Only applicable if you use `libstdc++` (normally true for GCC on Linux). A CMake custom configuration define adds compiler defines.
+Only applicable if you use `libstdc++` (to my knowledge for GCC normally true on Linux, and Clang normally uses "ld" as linker, so true there too). A custom CMake configuration define adds compiler defines.
 
 * Finds stuff analyzers can't.
 * May greatly increase execution time.
