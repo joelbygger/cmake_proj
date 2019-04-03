@@ -6,3 +6,4 @@
 
 * The included files (*.cmake) could be CMakeLists.txt files? If not, document why.
 * Change glob usage to something else, if not possible, document why it's used.
+* Add info on revisions of the tools tested (CMake, GCC, Clang, Make?)
