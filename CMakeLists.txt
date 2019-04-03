@@ -14,10 +14,13 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
+include(factories/settings/flags.cmake)
 include(factories/utest.cmake)
 include(factories/executable_and_lib.cmake)
 include(external/clang_tidy.cmake)
 include(external/iwyu.cmake)
 include(external/clang_format.cmake)
+
 add_subdirectory(external/catch2)
+add_subdirectory(testsOfFramework)
 add_subdirectory(src)

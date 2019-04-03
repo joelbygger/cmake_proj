@@ -29,24 +29,26 @@ or perhaps:
 make -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 ..
 ```
 
-## Additional features
-
-Some features are not always added to your targets (adds execution time, not intended for release..., of course one uses them as one wishes). The features are added with defines passed to CMake during configuration.
-
-* ASAN
-* TSAN
-* [LIBSTDCXX_CHECK](stdlibcxx_check)
-
 ## Create targets
 
 All targets you want to create should use the target factories. This will make sure correct build options are added and that all 3rd party tools are part of the build (or additional build targets are created).
 
 Factories and usage instructions available in [factories](factories).
 
+## Tests
+
+Tests for framework functionality: [testsOfFramework](testsOfFramework).
+
+Your application should be placed under [src](src).
+
 # Tools
 
-Analyzes, tests or corrects your code. When you create a target the tools below will (normally) be added automatically (in the factory).
-They will either be added to your target and executed every time you build, or added as a new target.
+Analyzes, tests or corrects your code.
+
+When you create a target via the factory the tools below will be added automatically.
+They will either be added to your target and executed every time you build or execute the target (depending on tool), or added as a new target.
+
+Implemented in [external](external), called by the factories.
 
 ## Clang tidy
 
@@ -63,15 +65,35 @@ When using GCC a new taget will be created: `${targetName}_clang_tidy`. Since Cl
 
 Added as arguments to Clang, will be part of every build.
 
+## UBSAN
+
+Undefined Behavior Sanitizer. Adds very little overhead to binary, always active. Currently only when using GCC.
+
+For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake).
+
 ## IWYU
 
 Include What You use (IWYU). IWYU must be installed on your system. Added to all targets and will be executed on all builds. A configuration file is available in project root [iwyu.imp](iwyu.imp).
 
 For more info see [external/iwyu.cmake](external/iwyu.cmake).
 
-## [Detecting incorrect C++ STL usage](#stdlibcxx_check)
+# Additional features
 
-Only applicable if you use `libstdc++` (which is at least true for GCC on Linux). A CMake custom configuration define adds compiler defines.
+Some features are not always added to your targets (they add execution time, not intended for release..., of course one uses them as one wishes). The features are added with defines passed to CMake during configuration.
+
+Implemented in [factories/settings/flags.cmake](factories/settings/flags.cmake), called by the factories.
+
+* xxx (see section [ASAN](#ASAN))
+* xxx (see section [TSAN](#TSAN))
+* LIBSTDCXX_CHECK : Check STL usage (libstdc++) (see section [incorrect-STL-usage](#incorrect-STL-usage))
+
+## ASAN
+
+## TSAN
+
+## Incorrect STL usage
+
+Only applicable if you use `libstdc++` (normally true for GCC on Linux). A CMake custom configuration define adds compiler defines.
 
 * Finds stuff analyzers can't.
 * May greatly increase execution time.
