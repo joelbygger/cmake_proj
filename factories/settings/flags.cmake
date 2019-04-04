@@ -48,9 +48,13 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                 # UBSAN suboptions not added by default:
                 -fsanitize=float-divide-by-zero
                 -fsanitize=float-cast-overflow
-                -fno-sanitize-recover=all # We want to stop all execution when an error occurs.
-                #-fsanitize-undefined-trap-on-error <- won't need UBSAN on target, but the crash report will give us very little.
+                #-fsanitize-undefined-trap-on-error <- removes need for the UBSAN lib, as a consequence the crash report will give us very little.
                 )
+
+        set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+                # We want to stop all execution when an error occurs.
+                # Applies to all sanitizers that supports it, and if the lib has it enabled.
+                -fno-sanitize-recover=all)
 
         set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
