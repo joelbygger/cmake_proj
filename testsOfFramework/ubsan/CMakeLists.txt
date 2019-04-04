@@ -4,8 +4,6 @@
 new_cpp_executable(
         NAME testTool_LIBSTDCXX_CHECK_1
         SOURCES app1.cpp)
-
 new_cpp_executable(
         NAME testTool_LIBSTDCXX_CHECK_2
-        SOURCES app2.cpp)
-
+        SOURCES app1.cpp)        
