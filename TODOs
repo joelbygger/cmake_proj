@@ -8,3 +8,4 @@
 * Change glob usage to something else, if not possible, document why it's used.
 * Add info on revisions of the tools tested (CMake, GCC, Clang, Make?)
 * Add tests for UBSAN, ASAN, TSAN
+* Check GCC list of sanitizers.
