@@ -1,6 +1,6 @@
 /**
- * This program intends to test that additional compiler definitions will make stdlibc++ crash.
- * Normally this program wonät crash.
+ * This program intends to test that additional compiler definitions will make stdlibc++ crash when run.
+ * Without this additional compiler definition this program won't crash.
  *
  * Program taken from: https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html
  */
