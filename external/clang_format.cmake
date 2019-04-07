@@ -14,7 +14,8 @@ else()
     # sure to not format any 3rd party files.
     file(GLOB_RECURSE ALL_MY_CPP_FILES
             LIST_DIRECTORIES false
-            ${CMAKE_SOURCE_DIR}/src/*.*pp)
+            ${CMAKE_SOURCE_DIR}/src/*.*pp
+            ${CMAKE_SOURCE_DIR}/testsOfFramework/*.*pp)
 
     add_custom_target(
             clang_format
