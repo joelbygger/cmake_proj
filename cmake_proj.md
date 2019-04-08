@@ -118,7 +118,9 @@ To be sure that the tools and additional checks are actually working with your s
 
 The tests consists of a test runner, for each test it spawns a thread. The runner will only look on return value from a test (and print it to stdout), a test returning 0 will be considered ok. You as user must evaluate if this is the result you expected from this particular test. E.g. if you activate any [Additional features](#additional-features) the corresponding test should crash (return != 0).
 
- All tests located under: [testsOfFramework](testsOfFramework). Tests must be started manually, they are not part of CTest since I'm not sure one wants them always executed and I am not sure how to make the test result evaluation reliable (is my assumption of e.g. UBSAN tool always resulting in non-zero return value?).
+All tests located under: [testsOfFramework](testsOfFramework). Tests must be started manually, they are not part of CTest since I'm not sure one wants them always executed and I am not sure how to make the test result evaluation reliable (is my assumption of e.g. UBSAN tool always resulting in non-zero return value?).
+
+The tests will not in any way be exhaustive, they are only intended to make sure that e.g. ASAN is active for some scenario, not that ASAN finds all bugs ASAN can find.
 
 # Notes on the CMake design
 
