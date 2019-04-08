@@ -8,17 +8,12 @@
  */
 
 #include "ubsan.hpp"
-#include <iostream>
 
-// int ubsan::app1()
-// int UBSAN::operator()()
 int UBSAN::doTest()
 {
     float sum = 10;
     for (int i = 64; i >= 0; --i) {
         sum /= static_cast<float>(i); // Error: division by zero on the last iteration.
     }
-
-    std::cout << "UBSAN test speaking, I have not crashed.\n" << std::flush;
     return 0;
 }

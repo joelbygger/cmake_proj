@@ -5,15 +5,21 @@
  * Program taken from: https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html
  */
 
-#include <iostream>
+
+#include "libcxx_debug.hpp"
 #include <list>
 
-int main()
+int LibCXXdebug::doTest()
 {
     std::list<int> list1 = { 1, 2, 3, 4 };
-    std::list<int> list2 = { 5, 3, 4, 2 };
-    list1.merge(list2);
+    list1.insert(list1.begin(), list1.begin(), list1.end());
+    auto j = 0;
     for (auto x : list1) {
-        std::cout << x << '\n';
+        j += x; // Dummy stuff.
     }
+
+    if(j == 666) { // Dummy stuff.
+        return 1;
+    }
+    return 0;
 }

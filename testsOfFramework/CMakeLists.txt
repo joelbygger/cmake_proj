@@ -13,4 +13,4 @@ new_cpp_library_shared(
 new_cpp_executable(
         NAME testTool_main
         SOURCES main.cpp
-        LINK_PRIVATE testTool_UBSAN)
+        LINK_PRIVATE testTool_UBSAN testTool_LIBSTDCXX_CHECK)
