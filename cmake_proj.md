@@ -101,13 +101,24 @@ Only applicable if you use `libstdc++` (to my knowledge normally true on Linux, 
 * Your entire application must be built with these flags (if you use things from outside this project).
 * Should probably not be present in release.
 
-That flag works can be tested with [src/testsOfTools/libstdcxx_check](src/testsOfTools/libstdcxx_check). For background see <https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html>
+For background see <https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html>
 
 To add it to your build target (independent on whether you use libstdc++ or not):
 
 ```bash
 cmake -DLIBSTDCXX_CHECK=1 ..
 ```
+
+# Framework tests
+
+To be sure that the tools and additional checks are actually working with your setup there are a number of tests:
+
+* [UBSAN](#UBSAN)
+* [incorrect-STL-usage](#incorrect-STL-usage)
+
+The tests consists of a test runner, for each test it spawns a thread. The runner will only look on return value from a test (and print it to stdout), a test returning 0 will be considered ok. You as user must evaluate if this is the result you expected from this particular test. E.g. if you activate any [Additional features](#additional-features) the corresponding test should crash (return != 0).
+
+ All tests located under: [testsOfFramework](testsOfFramework). Tests must be started manually, they are not part of CTest since I'm not sure one wants them always executed and I am not sure how to make the test result evaluation reliable (is my assumption of e.g. UBSAN tool always resulting in non-zero return value?).
 
 # Notes on the CMake design
 
