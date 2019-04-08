@@ -47,6 +47,8 @@ else()
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-cppcoreguidelines-pro-bounds-pointer-arithmetic")
     # Default arguments are ok.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-default-arguments")
+    # We want to be able to overload e.g. operator().
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-overloaded-operator")
     # We don't need this style.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-llvm-header-guard")
     # No need to enforce C++98 backwards compatibility.
