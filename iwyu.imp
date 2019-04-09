@@ -5,5 +5,6 @@
     { include: ["<bits/fs_fwd.h>", private, "<filesystem>", public ] },
     { include: ["<bits/fs_ops.h>", private, "<filesystem>", public ] },
     { include: ["<bits/fs_path.h>", private, "<filesystem>", public ] },
+    { include: ["<bits/shared_ptr.h>", private, "<memory>", public ] },
     { include: ["<memory>", public, "<vector>", public ] } # No frickin idea if this is correct, but header also includes memory...
 ]
