@@ -114,6 +114,7 @@ cmake -DLIBSTDCXX_CHECK=1 ..
 To be sure that the tools and additional checks are actually working with your setup there are a number of tests:
 
 * [UBSAN](#UBSAN)
+* [ASAN](#ASAN)
 * [incorrect-STL-usage](#incorrect-STL-usage)
 
 The tests consists of a test runner, for each test it spawns a thread. The runner will only look on return value from a test (and print it to stdout), a test returning 0 will be considered ok. You as user must evaluate if this is the result you expected from this particular test. E.g. if you activate any [Additional features](#additional-features) the corresponding test should crash (return != 0).

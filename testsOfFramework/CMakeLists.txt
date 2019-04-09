@@ -1,5 +1,6 @@
 
 # Add the tests.
+add_subdirectory(asan)
 add_subdirectory(libstdcxx_check)
 add_subdirectory(ubsan)
 
@@ -13,4 +14,4 @@ new_cpp_library_shared(
 new_cpp_executable(
         NAME testTool_main
         SOURCES main.cpp
-        LINK_PRIVATE testTool_UBSAN testTool_LIBSTDCXX_CHECK)
+        LINK_PRIVATE testTool_ASAN testTool_LIBSTDCXX_CHECK testTool_UBSAN)

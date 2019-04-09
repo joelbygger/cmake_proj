@@ -1,5 +1,6 @@
 
 #include "test_base.hpp"
+#include "asan.hpp"
 #include "libcxx_debug.hpp"
 #include "ubsan.hpp"
 #include <cstdlib>
@@ -38,10 +39,10 @@ public:
                 int status = 666;
                 wait(&status);
                 if (status != 0) {
-                    std::cout << "\n-----> " << tests.back()->getName() << " - CRASHED, did you expect it to? It returned: " << status << "\n" << std::flush;
+                    std::cout << "\n-----> " << tests.back()->getName() << "\n - CRASHED, did you expect it to? It returned: " << status << "\n" << std::flush;
                 }
                 else {
-                    std::cout << "\n-----> " << tests.back()->getName() << " - did NOT crash (returned 0), did you expect it to? \n" << std::flush;
+                    std::cout << "\n-----> " << tests.back()->getName() << "\n - did NOT crash (returned 0), did you expect it to? \n" << std::flush;
                 }
                 break;
             }
@@ -64,10 +65,12 @@ int main()
 {
     Tests tests;
 
-    UBSAN tst1;
-    LibCXXdebug tst2;
+    ASAN asan;
+    LibCXXdebug libcxx;
+    UBSAN ubsan;
 
-    tests.addTest(&tst1);
-    tests.addTest(&tst2);
+    tests.addTest(&asan);
+    tests.addTest(&libcxx);
+    tests.addTest(&ubsan);
     return tests.run();
 }
