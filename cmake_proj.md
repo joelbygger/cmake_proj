@@ -1,7 +1,7 @@
 
 # Why
 
-This is a template project, my attempt to get up and running faster when starting a new project. The goal is to always have all nice SW development tools available from the start, without needing to google compile flags, sanitizers, test frameworks etc. Maybe this template structure gives the greatest benefit when you create many targets, e.g. when you try to solve <https://adventofcode.com/>.
+This is a template project, my attempt to get up and running faster when starting a new project. The goal is to have a suite of SW development tools available from the start, without needing to google compile flags, sanitizers, test frameworks etc. Maybe this template structure gives the greatest benefit when you create many targets, e.g. when you try to solve <https://adventofcode.com/>.
 
 Also because Jason Turner said to "use the tools available" <https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md>.
 
