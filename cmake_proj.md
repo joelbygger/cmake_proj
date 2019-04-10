@@ -1,9 +1,16 @@
 
 # Why
 
-This is a template project, my attempt to get up and running faster when starting a new project. The goal is to have a suite of SW development tools available from the start, without needing to google compile flags, sanitizers, test frameworks etc. Maybe this template structure gives the greatest benefit when you create many targets, e.g. when you try to solve <https://adventofcode.com/>.
+This is a template project, a suite of SW development tools available from the start.
 
-Also because Jason Turner said to "use the tools available" <https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md>.
+* Create new targets faster (also true for new projects).
+* Not needing to google compile flags, sanitizers, test frameworks etc.
+* Everything gathered in one place (CMake) instead of separate shell scripts/ command line things to remember by heart.
+* I can. A curiosity in C++, CMake and all the cool tools embedded C does (did) not have (how cool are sanitizers?). And that Jason Turner said to "use the tools available" <https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md>.
+
+Perhaps this structure gives the greatest benefit when creating many targets, e.g. when working on <https://adventofcode.com/>.
+
+I have not found similar things online, but it may be due to googling skills. There will be drawbacks, perhaps one does not want Cppcheck executed on every build, but that's quite easy to fix. And the taste is like the bum...
 
 # What
 
