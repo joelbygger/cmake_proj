@@ -21,7 +21,7 @@ else()
 endif()
 
 ###
-#
+# We could have set variable CXX_INCLUDE_WHAT_YOU_USE for all targets, but we don't we want flexibility.
 ###
 function(add_iwyu_to_target)
     # Extract function params.

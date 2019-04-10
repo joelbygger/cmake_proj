@@ -12,4 +12,5 @@ target_include_directories(Catch INTERFACE ${CATCH_INCLUDE_DIR})
 # utest target, seems to work.
 new_cpp_library_shared(
         NAME catchMainlib
-        SOURCES ${CMAKE_CURRENT_LIST_DIR}/catchMain.cpp)
+        SOURCES ${CMAKE_CURRENT_LIST_DIR}/catchMain.cpp
+        NO_CPPCHECK YES)

@@ -15,12 +15,13 @@ enable_testing()
 #        NAME yourTargetName
 #        SOURCES a.cpp priv.cpp priv.hpp
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
-#        LINK_PRIVATE yourCUT and other target withPrivateLinkage)
+#        LINK_PRIVATE yourCUT and other target withPrivateLinkage
+#        NO_CPPCHECK trueIfYouDontWantIt)
 ###
 function(new_cpp_utest_executable)
     # Extract function params.
     set(options)
-    set(oneValueArgs NAME)
+    set(oneValueArgs NAME NO_CPPCHECK)
     set(multiValueArgs SOURCES INCLUDE_PRIVATE LINK_PRIVATE)
     cmake_parse_arguments(EXEC "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -34,7 +35,8 @@ function(new_cpp_utest_executable)
             NAME ${EXEC_NAME}
             SOURCES ${EXEC_SOURCES}
             INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE}
-            LINK_PRIVATE ${EXEC_LINK_PRIVATE} Catch catchMainlib) # Here we add Catch library, if another utest framework is desired, change this.
+            LINK_PRIVATE ${EXEC_LINK_PRIVATE} Catch catchMainlib # Here we add Catch library, if another utest framework is desired, change this.
+            NO_CPPCHECK ${EXEC_NO_CPPCHECK})
 
     # Report executable to CTest.
     add_test(

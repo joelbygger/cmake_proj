@@ -11,12 +11,13 @@
 #        INCLUDE_PUBLIC pathToPublicIncludeFolder
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
 #        LINK_PUBLIC different target withPublicLinkage
-#        LINK_PRIVATE different target withPrivateLinkage)
+#        LINK_PRIVATE different target withPrivateLinkage
+#        NO_CPPCHECK trueIfYouDontWantIt)
 ###
 function(new_cpp_executable)
     # Extract function params.
     set(options)
-    set(oneValueArgs NAME)
+    set(oneValueArgs NAME NO_CPPCHECK)
     set(multiValueArgs SOURCES INCLUDE_PUBLIC INCLUDE_PRIVATE LINK_PUBLIC LINK_PRIVATE)
     cmake_parse_arguments(EXEC "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -62,6 +63,10 @@ function(new_cpp_executable)
             INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE})
     # Add IWYU.
     add_iwyu_to_target(NAME ${EXEC_NAME})
+    # Add Cppcheck.
+    if(NOT EXEC_NO_CPPCHECK)
+        add_cppcheck_to_target(NAME ${EXEC_NAME})
+    endif()
 
 endfunction()
 
@@ -76,12 +81,13 @@ endfunction()
 #        INCLUDE_PUBLIC pathToPublicIncludeFolder
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
 #        LINK_PUBLIC different target withPublicLinkage
-#        LINK_PRIVATE different target withPrivateLinkage)
+#        LINK_PRIVATE different target withPrivateLinkage
+#        NO_CPPCHECK trueIfYouDontWantIt)
 ###
 function(new_cpp_library_shared)
     # Extract function params.
     set(options)
-    set(oneValueArgs NAME)
+    set(oneValueArgs NAME NO_CPPCHECK)
     set(multiValueArgs SOURCES INCLUDE_PUBLIC INCLUDE_PRIVATE LINK_PUBLIC LINK_PRIVATE)
     cmake_parse_arguments(LIB "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -120,5 +126,9 @@ function(new_cpp_library_shared)
             INCLUDE_PRIVATE ${LIB_INCLUDE_PRIVATE})
     # Add Include What You Use (IWYU).
     add_iwyu_to_target(NAME ${LIB_NAME})
+    # Add Cppcheck.
+    if(NOT LIB_NO_CPPCHECK)
+        add_cppcheck_to_target(NAME ${LIB_NAME})
+    endif()
 
 endfunction()

@@ -20,6 +20,7 @@ include(factories/executable_and_lib.cmake)
 include(external/clang_tidy.cmake)
 include(external/iwyu.cmake)
 include(external/clang_format.cmake)
+include(external/cppcheck.cmake)
 
 add_subdirectory(external/catch2)
 add_subdirectory(testsOfFramework)

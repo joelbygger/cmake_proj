@@ -50,9 +50,36 @@ They will either be added to your target and executed every time you build or ex
 
 Implemented in [external](external), called by the factories.
 
+## Cppcheck
+
+A static analysis tool.
+Must be installed on system. Increases build time and produces extra output, also when there are no findings. Example output:
+
+```bash
+[ 61%] Building CXX object src/a/CMakeFiles/a.dir/file1.cpp.o
+Checking /home/joel/dev/cmake_proj/src/a/file1.cpp ...
+[ 64%] Building CXX object src/a/CMakeFiles/a.dir/file2.cpp.o
+Checking /home/joel/dev/cmake_proj/src/a/file2.cpp ...
+Warning: cppcheck reported diagnostics:
+[/home/joel/dev/cmake_proj/src/a/file2.hpp:17]: (style) Class 'decoder' has a constructor with 1 argument that is not explicit.
+```
+
+Without Cppcheck:
+
+```bash
+[ 61%] Building CXX object src/a/CMakeFiles/a.dir/file1.cpp.o
+[ 64%] Building CXX object src/a/CMakeFiles/a.dir/file2.cpp.o
+```
+
+When a target is created it's possible to opt-out of Cppcheck. Nice if you build 3rd party stuff. If Cppcheck is too bloated it would be possible to create a special target for it, similar clang-tidy for GCC.
+
+A global configuration file is available in project root [CppCheckSuppressions.txt](CppCheckSuppressions.txt).
+
+For more info see [external/cppcheck.cmake](external/cppcheck.cmake).
+
 ## Clang tidy
 
-Added for executable and libs.
+A static analysis tool.
 Requires Clang compiler etc. Can be used with GCC as main compiler.
 
 For more info see [external/clang_tidy.cmake](external/clang_tidy.cmake).
@@ -73,7 +100,9 @@ For more info see [factories/settings/flags.cmake](factories/settings/flags.cmak
 
 ## IWYU
 
-Include What You use (IWYU). IWYU must be installed on your system. Added to all targets and will be executed on all builds. A configuration file is available in project root [iwyu.imp](iwyu.imp).
+Include What You use (IWYU). IWYU must be installed on your system. Will be executed on all builds.
+
+A global configuration file is available in project root [iwyu.imp](iwyu.imp).
 
 For more info see [external/iwyu.cmake](external/iwyu.cmake).
 
@@ -108,6 +137,11 @@ To add it to your build target (independent on whether you use libstdc++ or not)
 ```bash
 cmake -DLIBSTDCXX_CHECK=1 ..
 ```
+
+# Catch2
+
+Unit test framework.
+Included in repository.
 
 # Framework tests
 
