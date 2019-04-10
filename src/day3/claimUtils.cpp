@@ -27,8 +27,7 @@ namespace
      */
     auto rangesOverlap(const int& x1, const int& x2, const int& y1, const int& y2)
     {
-        bool result = true;
-        result = x1 <= y2 && y1 <= x2;
+        bool result = x1 <= y2 && y1 <= x2;
         return result;
     }
 } // namespace

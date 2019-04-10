@@ -12,7 +12,6 @@
 #include <string>
 #include <unordered_set>
 #include <utility>
-#include <vector>
 
 namespace
 {
@@ -37,7 +36,6 @@ namespace
     int findFirstDuplicate(char const* path)
     {
         std::ifstream ifs(path, std::ios::in);
-        std::vector<int> totFreqHist = { 0 };
         auto totFreq = 0;
 
         if (!ifs) {

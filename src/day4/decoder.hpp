@@ -14,7 +14,7 @@
 class decoder
 {
 public:
-    decoder(logs::storage& logs) : m_currId(0), m_state(states::start), m_logs(logs), m_asleepMin(0), m_awakeMin(0) {}
+    explicit decoder(logs::storage& logs) : m_currId(0), m_state(states::start), m_logs(logs), m_asleepMin(0), m_awakeMin(0) {}
     /**
      * Run state machine once.
      * @param log Input, a log line.
