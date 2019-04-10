@@ -141,7 +141,9 @@ cmake -DLIBSTDCXX_CHECK=1 ..
 # Catch2
 
 Unit test framework.
-Included in repository.
+Included in repository, to save build time it's only built once and is linked to all created test executables. All tests are added to CTest, which makes them easy to execute.
+
+Tests should be added via appropriate factory, see [factories](factories).
 
 # Framework tests
 
