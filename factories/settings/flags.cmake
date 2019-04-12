@@ -34,6 +34,7 @@ if(ASAN AND TSAN)
     message(FATAL_ERROR "ASAN and TSAN cannot be used at the same time.")
 endif()
 
+# Set for all sanitizers.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         # We want to stop all execution when an error occurs. Applies to all sanitizers that supports it, and if the lib has it enabled.
         -fno-sanitize-recover=all
@@ -41,9 +42,7 @@ set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         -fno-omit-frame-pointer)
 
 # UBSAN effects runtime & mem. very little, we let it always be active.
-set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-        -fsanitize=undefined)
-
+set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=undefined)
 set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 
