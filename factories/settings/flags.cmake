@@ -33,7 +33,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                 -Wnull-dereference -Wdouble-promotion -Wformat=2
                 -Wrestrict -Wpointer-arith -Wcast-qual
                 -Wswitch-bool -Wswitch-enum
-                -Winline)
+                -Winline -Wuseless-cast)
         # I think it can be argued that the warnings below should only be part of Debug build,
         # but I think they can be part of release.
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
@@ -81,8 +81,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
             set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
         endif()
-
-        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -Wuseless-cast)
     endif()
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
