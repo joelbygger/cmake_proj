@@ -30,14 +30,18 @@ endif()
 ###
 # Runtime sanitizers.
 ###
-# UBSAN effects runtime & mem. very little, we let it always be active.
-set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-        -fsanitize=undefined)
+if(ASAN AND TSAN)
+    message(FATAL_ERROR "ASAN and TSAN cannot be used at the same time.")
+endif()
 
 # We want to stop all execution when an error occurs.
 # Applies to all sanitizers that supports it, and if the lib has it enabled.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         -fno-sanitize-recover=all)
+
+# UBSAN effects runtime & mem. very little, we let it always be active.
+set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+        -fsanitize=undefined)
 
 set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
