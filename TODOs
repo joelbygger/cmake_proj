@@ -7,6 +7,7 @@
 * The included files (*.cmake) could be CMakeLists.txt files? If not, document why.
 * Change glob usage to something else, if not possible, document why it's used.
 * Add info on revisions of the tools tested (CMake, GCC, Clang, Make?)
-* Add tests for UBSAN, ASAN, TSAN
 * Check GCC list of sanitizers.
 * some clang tidy checks should be revised
+
+* add compile flags for clang?
