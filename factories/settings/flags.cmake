@@ -34,10 +34,11 @@ if(ASAN AND TSAN)
     message(FATAL_ERROR "ASAN and TSAN cannot be used at the same time.")
 endif()
 
-# We want to stop all execution when an error occurs.
-# Applies to all sanitizers that supports it, and if the lib has it enabled.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-        -fno-sanitize-recover=all)
+        # We want to stop all execution when an error occurs. Applies to all sanitizers that supports it, and if the lib has it enabled.
+        -fno-sanitize-recover=all
+        # Leave frame pointers. Allows the fast unwinder to function properly, get proper debug info in binary.
+        -fno-omit-frame-pointer)
 
 # UBSAN effects runtime & mem. very little, we let it always be active.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
@@ -80,7 +81,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         message("---- Compiling with address sanitizers.")
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                 -fsanitize=address # Implicitly activates sanitize=leak.
-                -fno-omit-frame-pointer
                 -fno-common)
 
         # Also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2
@@ -93,8 +93,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
         message("---- Compiling with thread sanitizers.")
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-                -fsanitize=thread
-                -fno-omit-frame-pointer)
+                -fsanitize=thread)
 
         set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
     endif()
