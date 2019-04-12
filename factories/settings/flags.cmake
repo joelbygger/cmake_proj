@@ -1,13 +1,13 @@
 
-###
-# Settings & Compile options for all created targets, no matter compiler.
-###
-
 # A sanity check, the flags set below might not exist in older compiler versions.
 if( (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "8.2.0"))
         OR (("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang") AND (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "7.0.0")) )
     message(FATAL_ERROR "Configuring for " ${CMAKE_CXX_COMPILER_ID} " in a version I'm not sure will work, it might, it might not. If you want to try, remove this comment.")
 endif()
+
+###
+# Settings & Compile options for all created targets, no matter compiler.
+###
 
 # Link What You Use (LWYU) is a CMake tool.
 # - For some reason I don't think it works with Clang?
@@ -25,6 +25,21 @@ if(LIBSTDCXX_CHECK)
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
             -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC)
 endif()
+
+
+###
+# Runtime sanitizers.
+###
+# UBSAN effects runtime & mem. very little, we let it always be active.
+set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+        -fsanitize=undefined)
+
+# We want to stop all execution when an error occurs.
+# Applies to all sanitizers that supports it, and if the lib has it enabled.
+set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+        -fno-sanitize-recover=all)
+
+set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 
 ###
@@ -47,21 +62,12 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     ###
     # Runtime sanitizers.
     ###
-    # UBSAN effects runtime & mem. very little, we let it always be active.
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-            -fsanitize=undefined
             # Suboptions GCC doesen't add by default:
             -fsanitize=float-divide-by-zero
             -fsanitize=float-cast-overflow
             #-fsanitize-undefined-trap-on-error <- removes need for the UBSAN lib, as a consequence the crash report will give us very little.
             )
-
-    # We want to stop all execution when an error occurs.
-    # Applies to all sanitizers that supports it, and if the lib has it enabled.
-    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-            -fno-sanitize-recover=all)
-
-    set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
     if(ASAN) # True if CMake called with -DASAN=1.
         message("---- Compiling with address sanitizers.")
@@ -95,18 +101,4 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             -Wno-c++98-compat-pedantic
             -Wno-padded
             )
-
-    ###
-    # Runtime sanitizers.
-    ###
-    # UBSAN effects runtime & mem. very little, we let it always be active.
-    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-            -fsanitize=undefined)
-
-    # We want to stop all execution when an error occurs.
-    # Applies to all sanitizers that supports it, and if the lib has it enabled.
-    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-            -fno-sanitize-recover=all)
-
-    set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 endif()
