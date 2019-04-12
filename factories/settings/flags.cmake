@@ -73,7 +73,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         message("---- Compiling with address sanitizers.")
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                 -fsanitize=address # Implicitly activates sanitize=leak.
-                -fsanitize-address-use-after-scope
                 -fno-omit-frame-pointer
                 -fno-common)
 
