@@ -93,4 +93,18 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             -Wno-c++98-compat-pedantic
             -Wno-padded
             )
+
+    ###
+    # Runtime sanitizers.
+    ###
+    # UBSAN effects runtime & mem. very little, we let it always be active.
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+            -fsanitize=undefined)
+
+    # We want to stop all execution when an error occurs.
+    # Applies to all sanitizers that supports it, and if the lib has it enabled.
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+            -fno-sanitize-recover=all)
+
+    set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 endif()
