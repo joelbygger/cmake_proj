@@ -49,9 +49,9 @@ set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
             -Wall -Wextra -Wshadow -pedantic -Wunused -Wconversion -Wsign-conversion
-            -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op
+            -Wduplicated-cond -Wduplicated-branches -Wlogical-op
             -Wnull-dereference -Wdouble-promotion -Wformat=2
-            -Wrestrict -Wpointer-arith -Wcast-qual
+            -Wpointer-arith -Wcast-qual
             -Wswitch-bool -Wswitch-enum
             -Winline -Wuseless-cast)
     # I think it can be argued that the warnings below should only be part of Debug build,
