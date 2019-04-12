@@ -16,7 +16,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
 # Has a negative effect on execution time.
 if(LIBSTDCXX_CHECK)
     message("---- Compiling with libstdc++ debug mode.")
-    set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
             -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC)
 endif()
 
@@ -27,7 +27,7 @@ endif()
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_GREATER "7.3.0")
-        set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                 -Wall -Wextra -Wshadow -pedantic -Wunused -Wconversion -Wsign-conversion
                 -Wmisleading-indentation -Wduplicated-cond -Wduplicated-branches -Wlogical-op
                 -Wnull-dereference -Wdouble-promotion -Wformat=2
@@ -36,38 +36,38 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
                 -Winline)
         # I think it can be argued that the warnings below should only be part of Debug build,
         # but I think they can be part of release.
-        set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                 -fstack-protector-all -Wstack-protector -fstack-check -D_FORTIFY_SOURCE=2)
 
         ###
         # Runtime sanitizers.
         ###
         # UBSAN effects runtime & mem. very little, we let it always be active.
-        set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                 -fsanitize=undefined
-                # UBSAN suboptions not added by default:
+                # Suboptions GCC doesen't add by default:
                 -fsanitize=float-divide-by-zero
                 -fsanitize=float-cast-overflow
                 #-fsanitize-undefined-trap-on-error <- removes need for the UBSAN lib, as a consequence the crash report will give us very little.
                 )
 
-        set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
-                # We want to stop all execution when an error occurs.
-                # Applies to all sanitizers that supports it, and if the lib has it enabled.
+        # We want to stop all execution when an error occurs.
+        # Applies to all sanitizers that supports it, and if the lib has it enabled.
+        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                 -fno-sanitize-recover=all)
 
         set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
         if(ASAN) # True if CMake called with -DASAN=1.
             message("---- Compiling with address sanitizers.")
-            set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+            set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                     -fsanitize=address # Implicitly activates sanitize=leak.
                     -fsanitize-address-use-after-scope
                     -fno-omit-frame-pointer
                     -fno-common)
 
             # Also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2
-            set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS} -fsanitize=pointer-compare -fsanitize=pointer-subtract)
+            set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=pointer-compare -fsanitize=pointer-subtract)
 
             # ASAN must come first in list.
             set(EXTRA_LINKER_LIBS -fsanitize=address ${EXTRA_LINKER_LIBS})
