@@ -48,7 +48,7 @@ set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-            -Wall -Wextra -Wshadow -pedantic -Wunused -Wconversion -Wsign-conversion
+            -Wall -Wextra -Wshadow -Wpedantic -Wunused -Wconversion -Wsign-conversion
             -Wduplicated-cond -Wduplicated-branches -Wlogical-op
             -Wnull-dereference -Wdouble-promotion -Wformat=2
             -Wpointer-arith -Wcast-qual
