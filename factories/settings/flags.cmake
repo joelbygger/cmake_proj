@@ -53,7 +53,10 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             -Wnull-dereference -Wdouble-promotion -Wformat=2
             -Wpointer-arith -Wcast-qual
             -Wswitch-bool -Wswitch-enum
-            -Winline -Wuseless-cast)
+            -Winline -Wuseless-cast
+            -Wnon-virtual-dtor -Wold-style-cast -Wcast-align
+            -Woverloaded-virtual
+            )
     # I think it can be argued that the warnings below should only be part of Debug build,
     # but I think they can be part of release.
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
