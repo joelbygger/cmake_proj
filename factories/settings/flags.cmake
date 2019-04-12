@@ -96,9 +96,10 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     endif()
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    # Ignore C++98 backwards compatibility and warings about classes etc. being being padded.
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+            # As long as all warnings works, I'll stick to it, can be changed alter, but easier and maybe safer this way.
             -Weverything
+            # Ignore C++98 backwards compatibility and warnings about classes etc. being being padded.
             -Wno-c++98-compat
             -Wno-c++98-compat-pedantic
             -Wno-padded
