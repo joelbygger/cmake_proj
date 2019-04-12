@@ -75,22 +75,36 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
         elseif(TSAN) # True if CMake called with -DTSAN=1.
             # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
             message("---- Compiling with thread sanitizers.")
-            set(MY_UNIV_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+            set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
                     -fsanitize=thread
                     -fno-omit-frame-pointer)
 
             set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
         endif()
 
-        set(MY_CXX_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS} -Wuseless-cast)
+        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -Wuseless-cast)
     endif()
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     # Ignore C++98 backwards compatibility and warings about classes etc. being being padded.
-    set(MY_CXX_COMPILE_FLAGS ${MY_UNIV_COMPILE_FLAGS}
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
             -Weverything
             -Wno-c++98-compat
             -Wno-c++98-compat-pedantic
             -Wno-padded
             )
+
+    ###
+    # Runtime sanitizers.
+    ###
+    # UBSAN effects runtime & mem. very little, we let it always be active.
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+            -fsanitize=undefined)
+
+    # We want to stop all execution when an error occurs.
+    # Applies to all sanitizers that supports it, and if the lib has it enabled.
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+            -fno-sanitize-recover=all)
+
+    set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 endif()

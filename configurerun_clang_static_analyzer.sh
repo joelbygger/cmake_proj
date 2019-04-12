@@ -29,9 +29,9 @@ $SCAN_BUILD --use-analyzer=$CLANG cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COM
 #make clean
 
 # And now run the world! I guess it works with command to compile in parallell.
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day1 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day2 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day3 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day4 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day5 -j16
+#$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day1 -j16
+#$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day2 -j16
+#$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day3 -j16
+#$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day4 -j16
+#$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day5 -j16
 $SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make testTool_main -j16
