@@ -79,8 +79,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if(ASAN) # True if CMake called with -DASAN=1.
         message("---- Compiling with address sanitizers.")
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-                -fsanitize=address # Implicitly activates sanitize=leak.
-                -fno-common)
+                -fsanitize=address # Implicitly activates sanitize=leak.)
 
         # Also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=pointer-compare -fsanitize=pointer-subtract)
