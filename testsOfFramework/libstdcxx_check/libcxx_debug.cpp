@@ -5,7 +5,6 @@
  * Program taken from: https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html
  */
 
-
 #include "libcxx_debug.hpp"
 #include <list>
 
@@ -18,7 +17,7 @@ int LibCXXdebug::doTest()
         j += x; // Dummy stuff.
     }
 
-    if(j == 666) { // Dummy stuff.
+    if (j == 666) { // Dummy stuff.
         return 1;
     }
     return 0;
