@@ -19,6 +19,8 @@ I have not found similar things online, but it may be due to googling skills. Th
 * Clang (partially)
 * MAKE
 
+If nothing else is stated, everything applies to both Clang and GCC.
+
 # How to use
 
 ## CMake configuration
@@ -130,16 +132,30 @@ Some features are not always added to your targets (they add execution time, not
 Implemented in [factories/settings/flags.cmake](factories/settings/flags.cmake), called by the factories.
 
 * xxx (see section [ASAN](#ASAN))
-* xxx (see section [TSAN](#TSAN))
+* ASAN (see section [TSAN](#TSAN))
 * LIBSTDCXX_CHECK : Check STL usage (libstdc++) (see section [incorrect-STL-usage](#incorrect-STL-usage))
 
 ## ASAN
+
+Address sanitizer, run time checks. Cannot be used at same time as TSAN. A custom CMake configuration define tells factories to add required compiler flags. To add it to all build targets:
+
+```bash
+cmake -DASAN=1 ..
+```
+
+ASAN can be controlled with additional flags, the list below is by no means complete and only for my convenience:
+
+* Common to ASAN, TSAN and MSAN.
+  * strict_string_checks=true:full_address_space=true:decorate_proc_maps=true
+* print_stats=true # Print various statistics after printing an error message or if atexit=1.
+* atexit=true # If set, prints ASan exit stats even after program terminates successfully.
+* export ASAN_OPTIONS="halt_on_error=false:detect_invalid_pointer_pairs=2:detect_stack_use_after_return=true:check_initialization_order=true:strict_init_order=true:print_scariness=true:alloc_dealloc_mismatch=true"
 
 ## TSAN
 
 ## Incorrect STL usage
 
-Only applicable if you use `libstdc++` (to my knowledge normally true on Linux, both for GCC and Clang). A custom CMake configuration define adds compiler defines.
+Only applicable if you use `libstdc++` (to my knowledge normally true on Linux, both for GCC and Clang). A custom CMake configuration define tells factories to add required compiler define.
 
 * Finds stuff analyzers can't.
 * May greatly increase execution time.
@@ -149,7 +165,7 @@ Only applicable if you use `libstdc++` (to my knowledge normally true on Linux, 
 
 For background see <https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html>
 
-To add it to your build target (independent on whether you use libstdc++ or not):
+To add it to all build targets (independent on whether you use libstdc++ or not):
 
 ```bash
 cmake -DLIBSTDCXX_CHECK=1 ..
