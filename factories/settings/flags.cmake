@@ -46,6 +46,14 @@ set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=undefined)
 set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 
+if(ASAN) # True if CMake called with -DASAN=1.
+    message("---- Compiling with address sanitizers.")
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=address) # Implicitly activates sanitize=leak.
+
+    # ASAN must come first in list.
+    set(EXTRA_LINKER_LIBS -fsanitize=address ${EXTRA_LINKER_LIBS})
+endif()
+
 ###
 # Compile options dependent on compiler.
 ####
@@ -77,16 +85,9 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             #-fsanitize-undefined-trap-on-error <- removes need for the UBSAN lib, as a consequence the crash report will give us very little.
             )
 
-    if(ASAN) # True if CMake called with -DASAN=1.
-        message("---- Compiling with address sanitizers.")
-        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-                -fsanitize=address # Implicitly activates sanitize=leak.)
-
-        # Also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2
+    if(ASAN)
+        # Both these also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2, seems like they don't exists in Clang? Defaulted?
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=pointer-compare -fsanitize=pointer-subtract)
-
-        # ASAN must come first in list.
-        set(EXTRA_LINKER_LIBS -fsanitize=address ${EXTRA_LINKER_LIBS})
 
     elseif(TSAN) # True if CMake called with -DTSAN=1.
         # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
