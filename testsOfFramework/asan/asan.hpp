@@ -2,7 +2,6 @@
  * This program intends to test that an ASAN check will crash this application when run.
  */
 
-
 #ifndef ASAN_HPP
 #define ASAN_HPP
 

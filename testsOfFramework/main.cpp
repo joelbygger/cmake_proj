@@ -1,7 +1,7 @@
 
-#include "test_base.hpp"
 #include "asan.hpp"
 #include "libcxx_debug.hpp"
+#include "test_base.hpp"
 #include "ubsan.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -22,14 +22,16 @@ public:
     {
         while (!tests.empty()) {
             pid_t pid = fork();
-            
+
             switch (pid) {
             case -1:
                 std::cout << "Fork failed.\n";
                 return 1;
 
             case 0: {
-                std::cout << "\n===============================================================\n" << tests.back()->getName() << " - is about to run.\n" << std::flush;
+                std::cout << "\n===============================================================\n"
+                          << tests.back()->getName() << " - is about to run.\n"
+                          << std::flush;
                 tests.back()->doTest();
                 exit(0); // If child has not crashed, it will return '0' here.
             }
