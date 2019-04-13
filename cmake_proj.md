@@ -113,6 +113,16 @@ A global configuration file is available in project root [iwyu.imp](iwyu.imp).
 
 For more info see [external/iwyu.cmake](external/iwyu.cmake).
 
+### GCC
+
+To my understanding IWYU is designed for Clang and has some issues understanding all GCC compiler flags, you might get some warnings on this, I choose to just ignore it as long as GCC is happy, e.g.:
+
+```bash
+Warning: include-what-you-use reported diagnostics:
+error: unsupported argument 'pointer-compare' to option 'fsanitize='
+warning: unknown warning option '-Wduplicated-cond'; did you mean '-Wduplicate-enum'? [-Wunknown-warning-option]
+```
+
 # Additional features
 
 Some features are not always added to your targets (they add execution time, not intended for release..., of course one uses them as one wishes). The features are added with defines passed to CMake during configuration.
