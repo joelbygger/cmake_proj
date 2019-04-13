@@ -41,7 +41,7 @@ set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         # Leave frame pointers. Allows the fast unwinder to function properly, get proper debug info in binary.
         -fno-omit-frame-pointer)
 
-# UBSAN effects runtime & mem. very little, we let it always be active.
+# UBSAN affects runtime & mem. very little, we let it always be active.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=undefined)
 set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
@@ -69,6 +69,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     ###
     # Runtime sanitizers.
     ###
+    # For UBSAN
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
             # Suboptions GCC doesen't add by default:
             -fsanitize=float-divide-by-zero
