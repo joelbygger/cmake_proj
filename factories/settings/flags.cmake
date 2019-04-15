@@ -15,9 +15,6 @@ endif()
 #   this out, you can comment in when you need it.
 #set(CMAKE_LINK_WHAT_YOU_USE TRUE)
 
-# When building for release, strip target binary. Works with Clang and GCC.
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -s")
-
 # Check libstdc++ implementations. Some things cannot be found by sanitizers.
 # Has a negative effect on execution time.
 if(LIBSTDCXX_CHECK)

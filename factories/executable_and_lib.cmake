@@ -48,6 +48,12 @@ function(new_cpp_executable)
         target_link_libraries(${EXEC_NAME} PRIVATE ${EXEC_LINK_PRIVATE})
     endif()
 
+    if (CMAKE_BUILD_TYPE STREQUAL Release)
+        strip_symbols(
+                NAME ${EXEC_NAME}
+                INPUT ${EXEC_NAME})
+    endif ()
+
     # Create a command to execute built binary.
     add_custom_target(${EXEC_NAME}_run
             COMMAND ${EXEC_NAME}
@@ -117,6 +123,13 @@ function(new_cpp_library_shared)
     if(LIB_LINK_PRIVATE)
         target_link_libraries(${LIB_NAME} PRIVATE ${LIB_LINK_PRIVATE})
     endif()
+
+
+    if (CMAKE_BUILD_TYPE STREQUAL Release)
+        strip_symbols(
+                NAME ${LIB_NAME}
+                INPUT ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${LIB_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}${CMAKE_EXTRA_SHARED_LIBRARY_SUFFIXES})
+    endif ()
 
     # Add clang-tidy.
     add_clang_tidy_to_target(
