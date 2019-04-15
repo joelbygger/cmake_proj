@@ -23,6 +23,8 @@ If nothing else is stated, everything applies to both Clang and GCC.
 
 # How to use
 
+This project is no 100% platform independent, e.g. some sanitizers might not work on Windows, if you get no complaints when configuring/ compiling it probably works...
+
 ## CMake configuration
 
 Run as you normally would, e.g.:
@@ -153,7 +155,7 @@ ASAN can be controlled with additional flags, see <https://github.com/google/san
 
 ## TSAN
 
-Thread sanitizer, run time checks. Cannot be used at the same time as ASAN. May catch errors that ASAN would also catch. A custom CMake configuration define tells factories to add required compiler flags. To add it to all build targets:
+Thread sanitizer, run time checks. Cannot be used at the same time as ASAN. May catch errors that ASAN would also catch. Note that all libraries you link to should be compiled with TSAN or you might get false positives etc. But i guess using it w/o proper libraries is better than nothing. A custom CMake configuration define tells factories to add required compiler flags. To add it to all build targets:
 
 ```bash
 cmake -DTSAN=1 ..
