@@ -41,17 +41,27 @@ set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         # Leave frame pointers. Allows the fast unwinder to function properly, get proper debug info in binary.
         -fno-omit-frame-pointer)
 
-# UBSAN affects runtime & mem. very little, we let it always be active.
+# UBSAN 
+# affects runtime & mem. very little, we let it always be active.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=undefined)
 set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 
 if(ASAN) # True if CMake called with -DASAN=1.
-    message("---- Compiling with address sanitizers.")
+    message("---- Compiling with address sanitizer.")
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=address) # Implicitly activates sanitize=leak.
 
     # ASAN must come first in list.
     set(EXTRA_LINKER_LIBS -fsanitize=address ${EXTRA_LINKER_LIBS})
+endif()
+
+if(TSAN) # True if CMake called with -DTSAN=1.
+    # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
+    message("---- Compiling with thread sanitizer.")
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
+            -fsanitize=thread)
+
+    set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
 endif()
 
 ###
@@ -88,14 +98,6 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     if(ASAN)
         # Both these also req. ASAN_OPTIONS detect_invalid_pointer_pairs=2, seems like they don't exists in Clang? Defaulted?
         set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=pointer-compare -fsanitize=pointer-subtract)
-
-    elseif(TSAN) # True if CMake called with -DTSAN=1.
-        # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
-        message("---- Compiling with thread sanitizers.")
-        set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-                -fsanitize=thread)
-
-        set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=thread)
     endif()
 
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")

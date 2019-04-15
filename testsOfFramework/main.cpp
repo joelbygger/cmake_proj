@@ -2,6 +2,7 @@
 #include "asan.hpp"
 #include "libcxx_debug.hpp"
 #include "test_base.hpp"
+#include "tsan.hpp"
 #include "ubsan.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -69,10 +70,12 @@ int main()
 
     ASAN asan;
     LibCXXdebug libcxx;
+    TSAN tsan;
     UBSAN ubsan;
 
     tests.addTest(&asan);
     tests.addTest(&libcxx);
+    tests.addTest(&tsan);
     tests.addTest(&ubsan);
     return tests.run();
 }

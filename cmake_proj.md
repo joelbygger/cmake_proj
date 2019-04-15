@@ -131,8 +131,8 @@ Some features are not always added to your targets (they add execution time, not
 
 Implemented in [factories/settings/flags.cmake](factories/settings/flags.cmake), called by the factories.
 
-* xxx (see section [ASAN](#ASAN))
-* ASAN (see section [TSAN](#TSAN))
+* ASAN (see section [ASAN](#ASAN))
+* TSAN (see section [TSAN](#TSAN))
 * LIBSTDCXX_CHECK : Check STL usage (libstdc++) (see section [incorrect-STL-usage](#incorrect-STL-usage))
 
 ## ASAN
@@ -143,7 +143,7 @@ Address sanitizer, run time checks. Cannot be used at same time as TSAN. A custo
 cmake -DASAN=1 ..
 ```
 
-ASAN can be controlled with additional flags, the list below is by no means complete and only for my convenience:
+ASAN can be controlled with additional flags, see <https://github.com/google/sanitizers/wiki/AddressSanitizerFlags>, the list below is by no means complete and only for my convenience:
 
 * Common to ASAN, TSAN and MSAN.
   * strict_string_checks=true:full_address_space=true:decorate_proc_maps=true
@@ -152,6 +152,14 @@ ASAN can be controlled with additional flags, the list below is by no means comp
 * export ASAN_OPTIONS="halt_on_error=false:detect_invalid_pointer_pairs=2:detect_stack_use_after_return=true:check_initialization_order=true:strict_init_order=true:print_scariness=true:alloc_dealloc_mismatch=true"
 
 ## TSAN
+
+Thread sanitizer, run time checks. Cannot be used at the same time as ASAN. May catch errors that ASAN would also catch. A custom CMake configuration define tells factories to add required compiler flags. To add it to all build targets:
+
+```bash
+cmake -DTSAN=1 ..
+```
+
+TSAN can be controlled with additional flags, I think defaults seems ok (as of today), see <https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags>.
 
 ## Incorrect STL usage
 

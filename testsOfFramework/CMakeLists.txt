@@ -2,6 +2,7 @@
 # Add the tests.
 add_subdirectory(asan)
 add_subdirectory(libstdcxx_check)
+add_subdirectory(tsan)
 add_subdirectory(ubsan)
 
 # This 'base lib' is used by all the test libs, to create a common interface.
@@ -14,4 +15,8 @@ new_cpp_library_shared(
 new_cpp_executable(
         NAME testTool_main
         SOURCES main.cpp
-        LINK_PRIVATE testTool_ASAN testTool_LIBSTDCXX_CHECK testTool_UBSAN)
+        LINK_PRIVATE
+                testTool_ASAN
+                testTool_LIBSTDCXX_CHECK
+                testTool_TSAN
+                testTool_UBSAN)
