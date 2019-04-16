@@ -2,7 +2,7 @@
  * This program intends to test that an TSAN check will crash this application when run.
  *
  * Program taken from: https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
-  * Adapted original program so that there are no compiler wanrings and put stuff in namespace.
+ * Adapted original program so that there are no compiler wanrings and put stuff in namespace.
  */
 
 #include "tsan.hpp"
@@ -14,14 +14,14 @@ namespace
 
     void* Thread1(void* x)
     {
-        (void)x; // Tell compiler var. is unused.
+        (void)x;  // Tell compiler var. is unused.
         Global++; // Data race.
         return nullptr;
     }
 
     void* Thread2(void* x)
     {
-        (void)x; // Tell compiler var. is unused.
+        (void)x;  // Tell compiler var. is unused.
         Global--; // Data race.
         return nullptr;
     }
