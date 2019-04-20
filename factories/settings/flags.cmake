@@ -35,7 +35,7 @@ endif()
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         # We want to stop all execution when an error occurs. Applies to all sanitizers that supports it, and if the lib has it enabled.
         -fno-sanitize-recover=all
-        # Leave frame pointers. Allows the fast unwinder to function properly, get proper debug info in binary.
+        # To get proper stack traces. Allows the fast unwinder to function properly, get proper debug info in binary.
         -fno-omit-frame-pointer)
 
 # UBSAN 
@@ -45,6 +45,7 @@ set(EXTRA_LINKER_LIBS ${EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 
 if(ASAN) # True if CMake called with -DASAN=1.
+    # Should use -01 or higher.
     message("---- Compiling with address sanitizer.")
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=address) # Implicitly activates sanitize=leak.
 
@@ -53,7 +54,7 @@ if(ASAN) # True if CMake called with -DASAN=1.
 endif()
 
 if(TSAN) # True if CMake called with -DTSAN=1.
-    # Maybe should use -02? https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual
+    # Should use -02 or higher.
     message("---- Compiling with thread sanitizer.")
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
             -fsanitize=thread)

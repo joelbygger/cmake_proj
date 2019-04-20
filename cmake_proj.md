@@ -105,7 +105,7 @@ Added as arguments to Clang, will be part of every build.
 
 ## UBSAN
 
-Undefined Behavior Sanitizer. Adds very little overhead to binary, always active. Currently only when using GCC.
+Undefined Behavior Sanitizer. Adds very little overhead to binary, always active. Currently only when using GCC. Also see section [About sanitizers](#about-sanitizers).
 
 For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake).
 
@@ -139,19 +139,11 @@ Implemented in [factories/settings/flags.cmake](factories/settings/flags.cmake),
 
 ## ASAN
 
-Address sanitizer, run time checks. Cannot be used at same time as TSAN. A custom CMake configuration define tells factories to add required compiler flags. To add it to all build targets:
+Address sanitizer, run time checks. Cannot be used at same time as TSAN. A custom CMake configuration define tells factories to add required compiler flags. Also see section [About sanitizers](#about-sanitizers). To add it to all build targets:
 
 ```bash
 cmake -DASAN=1 ..
 ```
-
-ASAN can be controlled with additional flags, see <https://github.com/google/sanitizers/wiki/AddressSanitizerFlags>, the list below is by no means complete and only for my convenience:
-
-* Common to ASAN, TSAN and MSAN.
-  * strict_string_checks=true:full_address_space=true:decorate_proc_maps=true
-* print_stats=true # Print various statistics after printing an error message or if atexit=1.
-* atexit=true # If set, prints ASan exit stats even after program terminates successfully.
-* export ASAN_OPTIONS="halt_on_error=false:detect_invalid_pointer_pairs=2:detect_stack_use_after_return=true:check_initialization_order=true:strict_init_order=true:print_scariness=true:alloc_dealloc_mismatch=true"
 
 ## TSAN
 
@@ -161,7 +153,7 @@ Thread sanitizer, run time checks. Cannot be used at the same time as ASAN. May 
 cmake -DTSAN=1 ..
 ```
 
-TSAN can be controlled with additional flags, I think defaults seems ok (as of today), see <https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags>.
+TSAN can be controlled with additional flags, I think defaults seems ok (as of today), see <https://github.com/google/sanitizers/wiki/ThreadSanitizerFlags>. Also see section [About sanitizers](#about-sanitizers).
 
 ## Incorrect STL usage
 
@@ -194,6 +186,7 @@ To be sure that the tools and additional checks are actually working with your s
 
 * [UBSAN](#UBSAN)
 * [ASAN](#ASAN)
+* [TSAN](#TSAN)
 * [incorrect-STL-usage](#incorrect-STL-usage)
 
 The tests consists of a test runner, for each test it spawns a thread. The runner will only look on return value from a test (and print it to stdout), a test returning 0 will be considered ok. You as user must evaluate if this is the result you expected from this particular test. E.g. if you activate any [Additional features](#additional-features) the corresponding test should crash (return != 0).
@@ -201,6 +194,22 @@ The tests consists of a test runner, for each test it spawns a thread. The runne
 All tests located under: [testsOfFramework](testsOfFramework). Tests must be started manually, they are not part of CTest since I'm not sure one wants them always executed and I am not sure how to make the test result evaluation reliable (is my assumption of e.g. UBSAN tool always resulting in non-zero return value?).
 
 The tests will not in any way be exhaustive, they are only intended to make sure that e.g. ASAN is active for some scenario, not that ASAN finds all bugs ASAN can find.
+
+# About sanitizers
+
+For proper stack traces with line numbers *SAN_SYMBOLIZER_PATH must be available, the easiest way (in Ubuntu) is to have llvm installed, and not e.g. llvm-7. Then you can find 'llvm-symbolizer' instead of 'llvm-symbolizer-7'.
+
+*SAN can be controlled with additional flags, see e.g. <https://github.com/google/sanitizers/wiki/AddressSanitizerFlags>.
+
+The list below is by no means complete and only for my convenience. Common to ASAN, TSAN and MSAN:
+
+* strict_string_checks=true:full_address_space=true:decorate_proc_maps=true
+
+For ASAN:
+
+* print_stats=true # Print various statistics after printing an error message or if atexit=1.
+* atexit=true # If set, prints ASan exit stats even after program terminates successfully.
+* export ASAN_OPTIONS="halt_on_error=false:detect_invalid_pointer_pairs=2:detect_stack_use_after_return=true:check_initialization_order=true:strict_init_order=true:print_scariness=true:alloc_dealloc_mismatch=true"
 
 # Notes on the CMake design
 
