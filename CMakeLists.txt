@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.10) # This is a version tested to work, earlier versions probably work as well.
+cmake_minimum_required(VERSION 3.14) # This is a version tested to work, earlier versions probably work as well.
 
 project(adventOfCode2018
         VERSION 0.0.0
-        DESCRIPTION "My solution in C++ tp advent of code."
+        DESCRIPTION "My solution in C++ to advent of code."
         LANGUAGES CXX)
 
 # All compile commands are written to file "compile_commands.json".
