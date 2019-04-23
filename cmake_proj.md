@@ -1,29 +1,30 @@
 
 # Why
 
-This is a template project, a suite of SW development tools available from the start.
+This is a C++ template project, combining different SW development tools.
 
-* Create new targets faster (also true for new projects).
-* Not needing to google compile flags, sanitizers, test frameworks etc.
-* Everything gathered in one place (CMake) instead of separate shell scripts/ command line things to remember by heart.
-* I can. A curiosity in C++, CMake and all the cool tools embedded C does (did) not have (how cool are sanitizers?). And that Jason Turner said to "use the tools available" <https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md>.
+* Create new targets (or projects) faster.
+* No need to google compile flags, sanitizers, test frameworks etc.
+* All SW development performed via one tool (e.g. Make, via CMake) instead of separate script files/ command line things (less to remember by heart).
+* I can and a curiosity in C++, CMake and all the cool tools C for embedded does (did) not have (how cool are sanitizers?). And that Jason Turner said to "use the tools available" <https://github.com/lefticus/cppbestpractices/blob/master/02-Use_the_Tools_Available.md>.
 
-Perhaps this structure gives the greatest benefit when creating many targets, e.g. when working on <https://adventofcode.com/>.
+The structure of this template project may perhaps give the greatest benefit when creating many targets.
 
-I have not found similar things online, but it may be due to googling skills. There will be drawbacks, perhaps one does not want Cppcheck executed on every build, but that's quite easy to fix. And the taste is like the bum...
+I have not found similar things online, but it may be due to googling skills. There will be drawbacks, if something is bad or missing it should be easy to add or adapt. This project is developed according to my needs.
 
 # What
 
-* Based on CMake
-* Tested with GCC (mainly)
+* CMake (MAKE)
+* GCC (mainly used during development)
 * Clang (partially)
 * MAKE
+* Catch2
 
 If nothing else is stated, everything applies to both Clang and GCC.
 
 # How to use
 
-This project is no 100% platform independent, e.g. some sanitizers might not work on Windows, if you get no complaints when configuring/ compiling it probably works...
+Users should need to adapt and add very little to get up and running. Change the CMake project name and description and start adding targets via the factories.
 
 ## CMake configuration
 
@@ -37,7 +38,7 @@ cmake -DCMAKE_BUILD_TYPE=Debug  ..
 or perhaps:
 
 ```bash
-make -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 ..
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 ..
 ```
 
 ## Create targets
@@ -211,7 +212,11 @@ For ASAN:
 * atexit=true # If set, prints ASan exit stats even after program terminates successfully.
 * export ASAN_OPTIONS="halt_on_error=false:detect_invalid_pointer_pairs=2:detect_stack_use_after_return=true:check_initialization_order=true:strict_init_order=true:print_scariness=true:alloc_dealloc_mismatch=true"
 
-# Notes on the CMake design
+# Disclaimers
+
+This project is no 100% platform independent, e.g. some sanitizers might not work on Windows, if you get no complaints when configuring/ compiling it probably works...
+
+## Notes on the CMake design
 
 The factories are CMakeLists.txt files. The external tool files under [external](external) (e.g. [Clang tidy](external/clang_tidy.cmake)) are CMake include files. Simply because I did not get it to work in a nice way otherwise.
 
