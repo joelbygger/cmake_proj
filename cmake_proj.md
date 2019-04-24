@@ -14,13 +14,37 @@ I have not found similar things online, but it may be due to googling skills. Th
 
 # What
 
-* CMake (MAKE)
-* GCC (mainly used during development)
-* Clang (partially)
+A CMake framework, a user performs one function call to create a library or an executable. The created target will then automatically get:
+
+* All build flags
+* These tools executed at every build/ added to target runtime:
+  * [UBSAN](#UBSAN)
+  * [IWYU](#IWYU)
+  * [Cppcheck](#Cppcheck)
+  * [Clang tidy](#Clang-tidy) (when using Clang)
+* Additional helper-targets created for:
+  * [Clang tidy](#Clang-tidy) (when using GCC)
+* These tools executed at every build/ added to target runtime (if activated during CMake configuration, they add execution time/ not intended for release):
+  * [ASAN](#ASAN)
+  * [TSAN](#TSAN)
+  * [Incorrect-STL-usage](#Incorrect-STL-usage)
+
+The project will also have one target added for code formatting, formatting all the code using [Clang format](#Clang-format).
+
+Unit tests are run with [Catch2](#Catch2).
+
+If you are running a normal development environment (e.g. Ubuntu) and have the following tools installed, everything should work (if you don't it SHOULD work, the feature needing the framework will just be omitted with a warning during CMake configuration):
+
+* CMake (tested with Make as build system)
+* GCC (not required if you use Clang)
+* LLVM, Clang (required if you use GCC, for e.g. clang-tidy)
 * MAKE
-* Catch2
+* Cppcheck
+* IWYU
 
 If nothing else is stated, everything applies to both Clang and GCC.
+
+There are some tests for the framework functionality, [Framework tests](#Framework-tests).
 
 # How to use
 
@@ -47,25 +71,11 @@ All targets you want to create should use the target factories. This will make s
 
 Factories and usage instructions available in [factories](factories).
 
-## Tests
-
-Tests for framework functionality: [testsOfFramework](testsOfFramework).
-
-Your application should be placed under [src](src).
-
-# Tools
-
-Analyzes, tests or corrects your code.
-
-When you create a target via the factory the tools below will be added automatically.
-They will either be added to your target and executed every time you build or execute the target (depending on tool), or added as a new target.
-
-Implemented in [external](external), called by the factories.
+# Static analyzers
 
 ## Cppcheck
 
-A static analysis tool.
-Must be installed on system. Increases build time and produces extra output, also when there are no findings. Example output:
+A static analysis tool. Increases build time and produces extra output (also when there are no findings). Example output:
 
 ```bash
 [ 61%] Building CXX object src/a/CMakeFiles/a.dir/file1.cpp.o
@@ -85,16 +95,12 @@ Without Cppcheck:
 
 When a target is created it's possible to opt-out of Cppcheck. Nice if you build 3rd party stuff. If Cppcheck is too bloated it would be possible to create a special target for it, similar clang-tidy for GCC.
 
-A global configuration file is available in project root [CppCheckSuppressions.txt](CppCheckSuppressions.txt).
-
-For more info see [external/cppcheck.cmake](external/cppcheck.cmake).
+A configuration file is available in project root [CppCheckSuppressions.txt](CppCheckSuppressions.txt). For more info see [external/cppcheck.cmake](external/cppcheck.cmake).
 
 ## Clang tidy
 
 A static analysis tool.
-Requires Clang compiler etc. Can be used with GCC as main compiler.
-
-For more info see [external/clang_tidy.cmake](external/clang_tidy.cmake).
+Requires Clang compiler etc. Can be used with GCC as main compiler. For more info see [external/clang_tidy.cmake](external/clang_tidy.cmake).
 
 ### Main compiler GCC
 
@@ -104,43 +110,15 @@ When using GCC a new taget will be created: `${targetName}_clang_tidy`. Since Cl
 
 Added as arguments to Clang, will be part of every build.
 
+# Runtime checkers
+
 ## UBSAN
 
-Undefined Behavior Sanitizer. Adds very little overhead to binary, always active. Currently only when using GCC. Also see section [About sanitizers](#about-sanitizers).
-
-For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake).
-
-## IWYU
-
-Include What You use (IWYU). IWYU must be installed on your system. Will be executed on all builds.
-
-A global configuration file is available in project root [iwyu.imp](iwyu.imp).
-
-For more info see [external/iwyu.cmake](external/iwyu.cmake).
-
-### GCC
-
-To my understanding IWYU is designed for Clang and has some issues understanding all GCC compiler flags, you might get some warnings on this, I choose to just ignore it as long as GCC is happy, e.g.:
-
-```bash
-Warning: include-what-you-use reported diagnostics:
-error: unsupported argument 'pointer-compare' to option 'fsanitize='
-warning: unknown warning option '-Wduplicated-cond'; did you mean '-Wduplicate-enum'? [-Wunknown-warning-option]
-```
-
-# Additional features
-
-Some features are not always added to your targets (they add execution time, not intended for release..., of course one uses them as one wishes). The features are added with defines passed to CMake during configuration.
-
-Implemented in [factories/settings/flags.cmake](factories/settings/flags.cmake), called by the factories.
-
-* ASAN (see section [ASAN](#ASAN))
-* TSAN (see section [TSAN](#TSAN))
-* LIBSTDCXX_CHECK : Check STL usage (libstdc++) (see section [incorrect-STL-usage](#incorrect-STL-usage))
+Undefined Behavior Sanitizer. Adds very little overhead to binary. Also see section [About sanitizers](#about-sanitizers). For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake).
 
 ## ASAN
 
-Address sanitizer, run time checks. Cannot be used at same time as TSAN. A custom CMake configuration define tells factories to add required compiler flags. Also see section [About sanitizers](#about-sanitizers). To add it to all build targets:
+Address sanitizer, run time checks. Cannot be used at same time as TSAN. A custom CMake configuration define tells factories to add required compiler flags. Also see section [About sanitizers](#about-sanitizers). For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake). To add it to all build targets:
 
 ```bash
 cmake -DASAN=1 ..
@@ -148,7 +126,7 @@ cmake -DASAN=1 ..
 
 ## TSAN
 
-Thread sanitizer, run time checks. Cannot be used at the same time as ASAN. May catch errors that ASAN would also catch. Note that all libraries you link to should be compiled with TSAN or you might get false positives etc. But i guess using it w/o proper libraries is better than nothing. A custom CMake configuration define tells factories to add required compiler flags. To add it to all build targets:
+Thread sanitizer, run time checks. Cannot be used at the same time as ASAN. May catch errors that ASAN would also catch. Note that all libraries you link to should be compiled with TSAN or you might get false positives etc. But i guess using it w/o proper libraries is better than nothing. A custom CMake configuration define tells factories to add required compiler flags. For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake). To add it to all build targets:
 
 ```bash
 cmake -DTSAN=1 ..
@@ -162,39 +140,57 @@ Only applicable if you use `libstdc++` (to my knowledge normally true on Linux, 
 
 * Finds stuff analyzers can't.
 * May greatly increase execution time.
-* IWYU might give you new warnings.
 * Your entire application must be built with these flags (if you use things from outside this project).
 * Should probably not be present in release.
+* Drawback, IWYU might give you new warnings on STL code.
 
-For background see <https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html>
-
-To add it to all build targets (independent on whether you use libstdc++ or not):
+For background see <https://kristerw.blogspot.com/2018/03/detecting-incorrect-c-stl-usage.html>. For more info see [factories/settings/flags.cmake](factories/settings/flags.cmake). To add it to all build targets (independent on whether you use libstdc++ or not):
 
 ```bash
 cmake -DLIBSTDCXX_CHECK=1 ..
 ```
 
-# Catch2
+## IWYU
+
+Include What You use (IWYU). IWYU must be installed on your system. Will be executed on all builds. A configuration file is available in project root [iwyu.imp](iwyu.imp). For more info see [external/iwyu.cmake](external/iwyu.cmake).
+
+### GCC
+
+To my understanding IWYU is designed for Clang and has some issues understanding all GCC compiler flags, you might get some warnings on this, I choose to just ignore it as long as GCC is happy, e.g.:
+
+```bash
+Warning: include-what-you-use reported diagnostics:
+error: unsupported argument 'pointer-compare' to option 'fsanitize='
+warning: unknown warning option '-Wduplicated-cond'; did you mean '-Wduplicate-enum'? [-Wunknown-warning-option]
+```
+
+# Other tools
+
+## Clang format
+
+Code formatting. A configuration file is available in project root [.clang-format](.clang-format). For more info see [external/clang_format.cmake](external/clang_format.cmake) (in lack of imagination uses CMake glob feature, as a result CMake must be reconfigured when new source files are added).
+
+# Testing
+
+## Catch2
 
 Unit test framework.
-Included in repository, to save build time it's only built once and is linked to all created test executables. All tests are added to CTest, which makes them easy to execute.
+Included in repository, to save build time it's only built once and is linked to all created test executables. All tests are added to CTest, which makes them easy to execute. For more info see folder [external/catch2](external/catch2).
 
-Tests should be added via appropriate factory, see [factories](factories).
+Tests are added via appropriate factory, see folder [factories](factories).
 
-# Framework tests
+## Framework tests
 
-To be sure that the tools and additional checks are actually working with your setup there are a number of tests:
+There are a number of tests of the framework, to be sure that compiler and link flags are set correctly and that your compiled code is instrumented as expected. The tests will not in any way be exhaustive, they are only intended to make sure that e.g. ASAN is active for some scenario, not that ASAN finds all bugs ASAN can find. Tests located in folder [testsOfFramework](testsOfFramework). The following tests are available:
 
 * [UBSAN](#UBSAN)
 * [ASAN](#ASAN)
 * [TSAN](#TSAN)
 * [incorrect-STL-usage](#incorrect-STL-usage)
 
-The tests consists of a test runner, for each test it spawns a thread. The runner will only look on return value from a test (and print it to stdout), a test returning 0 will be considered ok. You as user must evaluate if this is the result you expected from this particular test. E.g. if you activate any [Additional features](#additional-features) the corresponding test should crash (return != 0).
+These tests does not rely on any testing framework. There is one binary consisting of a test runner, for each test it spawns a thread. The runner will only look on return value from a test (and print it to stdout), a test returning 0 will be considered ok. You as user must manually evaluate if this is the result you expected from this particular test. E.g. if you activate any sanitizers during CMake configuration the corresponding test should crash (return != 0).
 
-All tests located under: [testsOfFramework](testsOfFramework). Tests must be started manually, they are not part of CTest since I'm not sure one wants them always executed and I am not sure how to make the test result evaluation reliable (is my assumption of e.g. UBSAN tool always resulting in non-zero return value?).
-
-The tests will not in any way be exhaustive, they are only intended to make sure that e.g. ASAN is active for some scenario, not that ASAN finds all bugs ASAN can find.
+These tests are not reported to CTest and must be started manually (opposed to tests created with the test factory). One reason is that they are expected to crash, which I don't think is "native" behavior to Catch2, another reason is that I don't think e.g. UBSAN always crashes the same way on all platforms (well, this project is perhaps not platform independent anyway...).
 
 # About sanitizers
 
