@@ -48,7 +48,19 @@ There are some tests for the framework functionality, [Framework tests](#Framewo
 
 # How to use
 
-Users should need to adapt and add very little to get up and running. Change the CMake project name and description and start adding targets via the factories.
+Users should need to adapt and add very little to get up and running. Change the CMake project name and description in root [CMakeLists.txt](CMakeLists.txt) and start adding targets via the factories, e.g.:
+
+``` bash
+new_cpp_library_shared(
+        NAME myLib
+        SOURCES lib.cpp lib.hpp
+        INCLUDE_PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+
+new_cpp_executable(
+        NAME myApp
+        SOURCES main.cpp
+        LINK_PRIVATE myLib)
+```
 
 ## CMake configuration
 
@@ -168,7 +180,7 @@ warning: unknown warning option '-Wduplicated-cond'; did you mean '-Wduplicate-e
 
 ## Clang format
 
-Code formatting. A configuration file is available in project root [.clang-format](.clang-format). For more info see [external/clang_format.cmake](external/clang_format.cmake) (in lack of imagination uses CMake glob feature, as a result CMake must be reconfigured when new source files are added).
+Code formatting. A build target is created that format all files: `clang_format` A configuration file is available in project root [.clang-format](.clang-format). For more info see [external/clang_format.cmake](external/clang_format.cmake) (in lack of imagination uses CMake glob feature, as a result CMake must be reconfigured when new source files are added).
 
 # Testing
 
