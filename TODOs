@@ -1,5 +1,4 @@
 * ta bort run targets
-* asan, ubsan etc. clang
 
 * catch add_library andvända fabriken?
 * clang_tidy with clang config
@@ -10,4 +9,4 @@
 * Check GCC list of sanitizers.
 * some clang tidy checks should be revised
 
-* add compile flags for clang?
+* add compile flags for clang? -Weffc++
