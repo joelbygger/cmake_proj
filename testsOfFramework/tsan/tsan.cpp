@@ -6,6 +6,7 @@
  */
 
 #include "tsan.hpp"
+#include <array>
 #include <pthread.h>
 
 namespace
@@ -29,7 +30,7 @@ namespace
 
 int TSAN::doTest()
 {
-    pthread_t t[2];
+    std::array<pthread_t, 2> t{};
     pthread_create(&t[0], nullptr, Thread1, nullptr);
     pthread_create(&t[1], nullptr, Thread2, nullptr);
     pthread_join(t[0], nullptr);

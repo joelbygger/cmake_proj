@@ -7,17 +7,16 @@
 
 #include "libcxx_debug.hpp"
 #include <list>
+#include <numeric>
 
 int LibCXXdebug::doTest()
 {
     std::list<int> list1 = { 1, 2, 3, 4 };
-    list1.insert(list1.begin(), list1.begin(), list1.end());
-    auto j = 0;
-    for (auto x : list1) {
-        j += x; // Dummy stuff.
-    }
+    list1.insert(list1.begin(), list1.begin(), list1.end()); // Crash.
 
-    if (j == 666) { // Dummy stuff.
+    auto j = std::accumulate(list1.begin(), list1.end(), 0); // Dummy stuff to get a ret. val.
+    const auto impossibleVal = 666;
+    if (j == impossibleVal) { // Dummy stuff.
         return 1;
     }
     return 0;

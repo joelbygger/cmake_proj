@@ -39,7 +39,7 @@ public:
 
             default: {
                 // Parent - wait child and interpret its result
-                int status = 666;
+                int status = 0;
                 wait(&status);
                 if (status != 0) {
                     std::cout << "\n-----> " << tests.back()->getName() << "\n - CRASHED, did you expect it to? It returned: " << status << "\n" << std::flush;

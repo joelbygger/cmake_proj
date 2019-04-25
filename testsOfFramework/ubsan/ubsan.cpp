@@ -11,8 +11,10 @@
 
 int UBSAN::doTest()
 {
-    float sum = 10;
-    for (int i = 64; i >= 0; --i) {
+    float sum = 0;
+    const auto someNum = 10;
+
+    for (int i = someNum; i >= 0; --i) {
         sum /= static_cast<float>(i); // Error: division by zero on the last iteration.
     }
     return 0;
