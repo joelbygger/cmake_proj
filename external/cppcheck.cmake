@@ -18,6 +18,8 @@ else()
     set(cppcheck_path_and_options ${cppcheck_path})
     # Some, not all possible(!) options are described below.
     list(APPEND cppcheck_path_and_options
+            # To find out the ID of a warning/ error, needed for suppressions.
+            #"--xml"
             # Gives more output.
             "--enable=style"
             # Better messages on findings, but also other extra output.
@@ -31,7 +33,9 @@ else()
             # Supress warnings on system headers, mainly interesting when also using check-config.
             #"--suppress=missingIncludeSystem"
             # Our global suppressions file.
-            "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt")
+            "--suppressions-list=${CMAKE_SOURCE_DIR}/CppCheckSuppressions.txt"
+            # Allows inline suppressions in implementatoin files.
+            "--inline-suppr")
 
 endif()
 
