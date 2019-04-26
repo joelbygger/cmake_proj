@@ -4,11 +4,12 @@
 
 #include "logs.hpp"
 #include <cstddef>
+#include <limits>
 #include <utility>
 
 std::tuple<int, int> logs::getMaxSleeperInfo(const storage& logs)
 {
-    auto maxSleeperId = 666;
+    auto maxSleeperId = std::numeric_limits<int>::max();
     auto maxSleeperTimeSum = 0;
 
     // First find out which elf slep the most.
@@ -40,7 +41,7 @@ std::tuple<int, int> logs::getMaxSleeperInfo(const storage& logs)
 // Find the ID and minut of elf that sleeps the most times on a minute.
 std::tuple<int, int> logs::getMaxFrequentSleeperInfo(const logs::storage& logs)
 {
-    auto maxSleeperId = 666;
+    auto maxSleeperId = std::numeric_limits<int>::max();
     auto maxSleeperTime = 0;
     auto maxSleeperMinute = 0;
 

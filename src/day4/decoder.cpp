@@ -93,7 +93,8 @@ void decoder::runStateSupervision(const std::string& log)
         m_currId = stoi(log.substr(itPos + 1));
 
         // If ID is missing add vector of size 60 initialized to 0, if ID exists nothing happens.
-        m_logs.try_emplace(m_currId, 60, 0);
+        const auto sz = 60;
+        m_logs.try_emplace(m_currId, sz, 0);
         break;
     }
     case states::sleep: {
