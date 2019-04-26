@@ -17,7 +17,7 @@ class fabric
 public:
     fabric(const size_t maxW, const size_t maxH);
     void markClaimsOnFabric(const std::vector<claim>& claims);
-    int countOverlaps() const;
+    [[nodiscard]] int countOverlaps() const;
     void printFabric() const;
 
 private:

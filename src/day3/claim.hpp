@@ -24,22 +24,22 @@ public:
         std::cout << "#" << m_id << " @ " << m_leftCoord << "," << m_topCoord << ": " << m_width << "x" << m_height << "\n";
     }
 
-    auto leftCoord() const
+    [[nodiscard]] auto leftCoord() const
     {
         return m_leftCoord;
     }
 
-    auto topCoord() const
+    [[nodiscard]] auto topCoord() const
     {
         return m_topCoord;
     }
 
-    auto widthEndCoord() const
+    [[nodiscard]] auto widthEndCoord() const
     {
         return m_leftCoord + m_width - 1;
     }
 
-    auto heightEndCoord() const
+    [[nodiscard]] auto heightEndCoord() const
     {
         return m_topCoord + m_height - 1;
     }
@@ -57,13 +57,13 @@ public:
         }
     }
 
-    auto hasOverlap() const
+    [[nodiscard]] auto hasOverlap() const
     {
         // An unset overlap status is interpreted as it is set.
         return m_hasOverlap == HasOverlap::no;
     }
 
-    auto id() const
+    [[nodiscard]] auto id() const
     {
         return m_id;
     }

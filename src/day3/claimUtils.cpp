@@ -43,7 +43,10 @@ claimsVec claimUtils::fetchClaims(char const* path)
 
     while (!ifs.eof()) {
         // Format in file: '#1 @ 1,3: 4x4'
-        std::__cxx11::string id, dummy, coord, dimension;
+        std::string id;
+        std::string dummy;
+        std::string coord;
+        std::string dimension;
         ifs >> id >> dummy >> coord >> dimension;
         claim c(stoi(id.substr(1)), stoi(coord), stoi(coord.substr(coord.find(',') + 1)), stoi(dimension), stoi(dimension.substr(dimension.find('x') + 1)));
         claims.emplace_back(c);
