@@ -3,8 +3,10 @@
 //
 
 #include "manager.hpp"
+#include <algorithm>
 #include <cstring>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <stdexcept>
 #include <string>
@@ -15,7 +17,7 @@ class task1
 {
 public:
     // Calc hash on entire file.
-    int calcHash(std::vector<std::string> ids)
+    int calcHash(const std::vector<std::string>& ids)
     {
         // Go through file.
         int accumulatedTwos = 0;
@@ -93,12 +95,14 @@ private:
     bool allSameLen(const std::vector<std::string>& ids)
     {
         auto expectLen = ids.front().length();
-        for (const auto& id : ids) {
-            if (expectLen != id.length()) {
-                std::cout << "Inconsistent lenghths, first row has: " << expectLen << " current is: " << id << "(" << id.length() << ")\n";
-                return false;
-            }
+
+        auto elem = std::find_if(ids.begin(), ids.end(), [&](const std::string& id) -> bool { return expectLen != id.length(); });
+
+        if (elem != std::end(ids)) {
+            std::cout << "Inconsistent lengths, first row has: " << expectLen << " current is: " << *elem << "(" << elem->length() << ")\n";
+            return false;
         }
+
         return true;
     }
 };
