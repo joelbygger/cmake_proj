@@ -15,7 +15,7 @@ class claim
 {
 public:
     claim(int id, int leftCoord, int topCoord, int w, int h)
-        : m_id(id), m_leftCoord(leftCoord), m_topCoord(topCoord), m_width(w), m_height(h), m_hasOverlap(HasOverlap::unknown)
+        : m_id(id), m_leftCoord(leftCoord), m_topCoord(topCoord), m_width(w), m_height(h), m_overlapState(HasOverlap::unknown)
     {
     }
 
@@ -47,12 +47,12 @@ public:
     void setOverlapIfUnset(const bool doesOverlap)
     {
         // Don't overwrite a previously set overlap, that overlap still exists...
-        if (m_hasOverlap == HasOverlap::unknown || (m_hasOverlap == HasOverlap::no && doesOverlap)) {
+        if (m_overlapState == HasOverlap::unknown || (m_overlapState == HasOverlap::no && doesOverlap)) {
             if (doesOverlap) {
-                m_hasOverlap = HasOverlap::yes;
+                m_overlapState = HasOverlap::yes;
             }
             else {
-                m_hasOverlap = HasOverlap::no;
+                m_overlapState = HasOverlap::no;
             }
         }
     }
@@ -60,7 +60,7 @@ public:
     [[nodiscard]] auto hasOverlap() const
     {
         // An unset overlap status is interpreted as it is set.
-        return m_hasOverlap == HasOverlap::no;
+        return m_overlapState == HasOverlap::no;
     }
 
     [[nodiscard]] auto id() const
@@ -76,12 +76,12 @@ public:
     };
 
 private:
-    int m_id;                // ID of the claim.
-    int m_leftCoord;         // How many inches from left the box starts.
-    int m_topCoord;          // How many inches from top the box starts.
-    int m_width;             // Width from left coord.
-    int m_height;            // Height from top coord.
-    HasOverlap m_hasOverlap; // Info on if this claim overlaps another claim.
+    int m_id;                  // ID of the claim.
+    int m_leftCoord;           // How many inches from left the box starts.
+    int m_topCoord;            // How many inches from top the box starts.
+    int m_width;               // Width from left coord.
+    int m_height;              // Height from top coord.
+    HasOverlap m_overlapState; // Info on if this claim overlaps another claim.
 };
 
 #endif // ADVENTOFCODE2018_CLAIM_HPP
