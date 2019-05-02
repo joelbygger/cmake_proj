@@ -1,4 +1,4 @@
-# Strip symbols using the strip tool the system supplies (e.g. /usr/bin/strip).
+# Strip symbols from a built target, using the strip tool the system supplies (e.g. /usr/bin/strip).
 # Clang doesen't support GCC '-s' flag, so to be compiler independent we use the strip tool the system supplies.
 # The strip tool also supports different strip options.
 # NOTE: The strip tool might not support all platforms if you cross-compile.
