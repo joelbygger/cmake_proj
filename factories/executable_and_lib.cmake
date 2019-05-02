@@ -2,6 +2,8 @@
 # This file contains factories to generate build targets. Intended to make sure
 # all build targets gets the correct global compilation options, tooling etc.
 
+include(${CMAKE_CURRENT_LIST_DIR}/helpers/strip_symbols.cmake)
+
 ###
 # Factory for generating executable targets.
 # Usage (from some CMakeLists.txt file):
@@ -123,7 +125,6 @@ function(new_cpp_library_shared)
     if(LIB_LINK_PRIVATE)
         target_link_libraries(${LIB_NAME} PRIVATE ${LIB_LINK_PRIVATE})
     endif()
-
 
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         strip_symbols(

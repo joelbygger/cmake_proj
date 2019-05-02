@@ -8,5 +8,5 @@ All your build targets should be created via a factory here, see comments in the
 
 The following files are used by the factories.
 
-Helper function to remove symbols from built binary [settings/strip_symbols.cmake](settings/strip_symbols.cmake).
+Helper function to remove symbols from built binary [helpers/strip_symbols.cmake](helpers/strip_symbols.cmake).
 Compiler flags and additional features are configured in [settings/flags.cmake](settings/flags.cmake).
