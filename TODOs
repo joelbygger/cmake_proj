@@ -10,3 +10,5 @@
 * some clang tidy checks should be revised
 
 * add compile flags for clang? -Weffc++
+
+* clang tidy & cppcheck valbar köras varje gång eller på flagga
