@@ -8,6 +8,7 @@
 #include <cerrno>
 #include <cstring>
 #include <fstream>
+#include <iterator>
 #include <stdexcept>
 #include <string>
 #include <type_traits>
@@ -86,10 +87,10 @@ void claimUtils::markOverlappingClaims(claimsVec& claims)
 
 int claimUtils::findNonOverlapping(const claimsVec& claims)
 {
-    for (const auto& c : claims) {
-        if (c.hasOverlap()) {
-            return c.id();
-        }
+    auto foundClaim = std::find_if(claims.begin(), claims.end(), [](const claim& c) -> bool { return c.hasOverlap(); });
+
+    if (foundClaim != std::end(claims)) {
+        return foundClaim->id();
     }
     return 0;
 }

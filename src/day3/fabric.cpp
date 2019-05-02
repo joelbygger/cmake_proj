@@ -5,6 +5,7 @@
 #include "fabric.hpp"
 #include "claim.hpp"
 #include <algorithm>
+#include <cstdint>
 #include <iostream>
 #include <iterator>
 
@@ -46,16 +47,12 @@ void fabric::markClaimsOnFabric(const std::vector<claim>& claims)
  */
 int fabric::countOverlaps() const
 {
-    int overlaps = 0;
+    std::int64_t overlaps = 0; // Must be long int, if we use e.g. auto GCC will complain on conversion.
 
     for (const auto& row : m_fabric) {
-        for (const auto spot : row) {
-            if (spot > 1) {
-                overlaps++;
-            }
-        }
+        overlaps += std::count_if(row.begin(), row.end(), [](size_t spot) { return spot > 1; });
     }
-    return overlaps;
+    return static_cast<int>(overlaps);
 }
 
 // Prints a matrix, expects the inner content to not be printable.
