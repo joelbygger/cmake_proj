@@ -1,6 +1,8 @@
 ###
 # This file will find clang tidy, set up some useful variables and create helper 
 # functions that are useful when creating new build targets.
+# Unfortunately I don't know how to comment removed checks in a .clang-tidy file,
+# therefore everything is configured in this CMake file.
 ###
 
 find_program(CLANG_TIDY_EXE
