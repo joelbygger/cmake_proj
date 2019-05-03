@@ -12,3 +12,5 @@
 * add compile flags for clang? -Weffc++
 
 * clang tidy & cppcheck valbar köras varje gång eller på flagga
+* clang tidy vid gcc behöver ej skriva ut alla filer
+* allt i flags.cmake skall heta my_
