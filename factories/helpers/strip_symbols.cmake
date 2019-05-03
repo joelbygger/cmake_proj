@@ -1,3 +1,4 @@
+# This file contains helper functions to the factories.
 # Strip symbols from a built target, using the strip tool the system supplies (e.g. /usr/bin/strip).
 # Clang doesen't support GCC '-s' flag, so to be compiler independent we use the strip tool the system supplies.
 # The strip tool also supports different strip options.
