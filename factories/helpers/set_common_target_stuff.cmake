@@ -29,7 +29,7 @@ function(set_common_target_stuff)
     set_target_properties(${CMN_NAME} PROPERTIES CXX_STANDARD 17)
 
     target_compile_options(${CMN_NAME} PRIVATE ${MY_CXX_COMPILE_FLAGS})
-    target_link_libraries(${CMN_NAME} PRIVATE ${EXTRA_LINKER_LIBS})
+    target_link_libraries(${CMN_NAME} PRIVATE ${MY_EXTRA_LINKER_LIBS})
 
     if(CMN_INCLUDE_PUBLIC)
         target_include_directories(${CMN_NAME} PUBLIC ${CMN_INCLUDE_PUBLIC})
