@@ -1,8 +1,11 @@
-
 # This file contains factories to generate build targets. Intended to make sure
 # all build targets gets the correct global compilation options, tooling etc.
 
+# First include functions needed by the factories.
+# The functions will becode project global (since this file is included at top-level)
+# but for "readability" I still include the sub-files in this file.
 include(${CMAKE_CURRENT_LIST_DIR}/helpers/strip_symbols.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/helpers/set_common_target_stuff.cmake)
 
 ###
 # Factory for generating executable targets.
@@ -30,25 +33,14 @@ function(new_cpp_executable)
 
     add_executable(${EXEC_NAME} ${EXEC_SOURCES})
 
-    set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD_REQUIRED ON)
-    # We must also actually define which C++ standard to use.
-    set_target_properties(${EXEC_NAME} PROPERTIES CXX_STANDARD 17)
-
-    target_compile_options(${EXEC_NAME} PRIVATE ${MY_CXX_COMPILE_FLAGS})
-    target_link_libraries(${EXEC_NAME} PRIVATE ${EXTRA_LINKER_LIBS})
-
-    if(EXEC_INCLUDE_PUBLIC)
-        target_include_directories(${EXEC_NAME} PUBLIC ${EXEC_INCLUDE_PUBLIC})
-    endif()
-    if(EXEC_INCLUDE_PRIVATE)
-        target_include_directories(${EXEC_NAME} PRIVATE ${EXEC_INCLUDE_PRIVATE})
-    endif()
-    if(EXEC_LINK_PUBLIC)
-        target_link_libraries(${EXEC_NAME} PUBLIC ${EXEC_LINK_PUBLIC})
-    endif()
-    if(EXEC_LINK_PRIVATE)
-        target_link_libraries(${EXEC_NAME} PRIVATE ${EXEC_LINK_PRIVATE})
-    endif()
+    set_common_target_stuff(
+            NAME ${EXEC_NAME}
+            SOURCES ${EXEC_SOURCES}
+            INCLUDE_PUBLIC ${EXEC_INCLUDE_PUBLIC}
+            INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE}
+            LINK_PUBLIC ${EXEC_LINK_PUBLIC}
+            LINK_PRIVATE ${EXEC_LINK_PRIVATE}
+            NO_CPPCHECK ${EXEC_NO_CPPCHECK})
 
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         strip_symbols(
@@ -60,21 +52,7 @@ function(new_cpp_executable)
     add_custom_target(${EXEC_NAME}_run
             COMMAND ${EXEC_NAME}
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-            COMMENT "Run generated binary in ${CMAKE_CURRENT_SOURCE_DIR}"
-            )
-
-    # Add clang-tidy.
-    add_clang_tidy_to_target(
-            NAME ${EXEC_NAME}
-            SOURCES ${EXEC_SOURCES}
-            INCLUDE_PUBLIC ${EXEC_INCLUDE_PUBLIC}
-            INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE})
-    # Add IWYU.
-    add_iwyu_to_target(NAME ${EXEC_NAME})
-    # Add Cppcheck.
-    if(NOT EXEC_NO_CPPCHECK)
-        add_cppcheck_to_target(NAME ${EXEC_NAME})
-    endif()
+            COMMENT "Run generated binary in ${CMAKE_CURRENT_SOURCE_DIR}")
 
 endfunction()
 
@@ -106,43 +84,19 @@ function(new_cpp_library_shared)
 
     add_library(${LIB_NAME} SHARED ${LIB_SOURCES})
 
-    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD_REQUIRED ON)
-    # We must also actually define which C++ standard to use.
-    set_target_properties(${LIB_NAME} PROPERTIES CXX_STANDARD 17)
-
-    target_compile_options(${LIB_NAME} PRIVATE ${MY_CXX_COMPILE_FLAGS})
-    target_link_libraries(${LIB_NAME} PRIVATE ${EXTRA_LINKER_LIBS})
-
-    if(LIB_INCLUDE_PUBLIC)
-        target_include_directories(${LIB_NAME} PUBLIC ${LIB_INCLUDE_PUBLIC})
-    endif()
-    if(LIB_INCLUDE_PRIVATE)
-        target_include_directories(${LIB_NAME} PRIVATE ${LIB_INCLUDE_PRIVATE})
-    endif()
-    if(LIB_LINK_PUBLIC)
-        target_link_libraries(${LIB_NAME} PUBLIC ${LIB_LINK_PUBLIC})
-    endif()
-    if(LIB_LINK_PRIVATE)
-        target_link_libraries(${LIB_NAME} PRIVATE ${LIB_LINK_PRIVATE})
-    endif()
+    set_common_target_stuff(
+            NAME ${LIB_NAME}
+            SOURCES ${LIB_SOURCES}
+            INCLUDE_PUBLIC ${LIB_INCLUDE_PUBLIC}
+            INCLUDE_PRIVATE ${LIB_INCLUDE_PRIVATE}
+            LINK_PUBLIC ${LIB_LINK_PUBLIC}
+            LINK_PRIVATE ${LIB_LINK_PRIVATE}
+            NO_CPPCHECK ${LIB_NO_CPPCHECK})
 
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         strip_symbols(
                 NAME ${LIB_NAME}
                 INPUT ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_SHARED_LIBRARY_PREFIX}${LIB_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}${CMAKE_EXTRA_SHARED_LIBRARY_SUFFIXES})
     endif ()
-
-    # Add clang-tidy.
-    add_clang_tidy_to_target(
-            NAME ${LIB_NAME}
-            SOURCES ${LIB_SOURCES}
-            INCLUDE_PUBLIC ${LIB_INCLUDE_PUBLIC}
-            INCLUDE_PRIVATE ${LIB_INCLUDE_PRIVATE})
-    # Add Include What You Use (IWYU).
-    add_iwyu_to_target(NAME ${LIB_NAME})
-    # Add Cppcheck.
-    if(NOT LIB_NO_CPPCHECK)
-        add_cppcheck_to_target(NAME ${LIB_NAME})
-    endif()
 
 endfunction()
