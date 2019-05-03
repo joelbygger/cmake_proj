@@ -100,7 +100,7 @@ function(add_clang_tidy_to_target)
     if(CLANG_TIDY_EXE)
         if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             set(TARGET_NAME ${TARGET_TIDY_NAME}_clang_tidy)
-            message("---- Adding new clang-tidy target ${TARGET_NAME} with sources: [${TARGET_TIDY_SOURCES}] and includes [${TARGET_TIDY_INCLUDE_PUBLIC}] [${TARGET_TIDY_INCLUDE_PRIVATE}]")
+            # message("---- Adding new clang-tidy target ${TARGET_NAME} with sources: [${TARGET_TIDY_SOURCES}] and includes [${TARGET_TIDY_INCLUDE_PUBLIC}] [${TARGET_TIDY_INCLUDE_PRIVATE}]")
             # Formatting.
             foreach(SRC ${TARGET_TIDY_SOURCES})
                 list(APPEND SRC_W_PATH ${CMAKE_CURRENT_SOURCE_DIR}/${SRC})
