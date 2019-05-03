@@ -206,7 +206,7 @@ These tests are not reported to CTest and must be started manually (opposed to t
 
 # About sanitizers
 
-For proper stack traces with line numbers *SAN_SYMBOLIZER_PATH must be available, the easiest way (in Ubuntu) is to have llvm installed, and not e.g. llvm-7. Then you can find 'llvm-symbolizer' instead of 'llvm-symbolizer-7'.
+For proper stack traces with line numbers *SAN_SYMBOLIZER_PATH must be available, the easiest way (in Ubuntu) is to have llvm installed (and not e.g. llvm-7). Then it will point to 'llvm-symbolizer' instead of 'llvm-symbolizer-7' and things will work smoothly.
 
 *SAN can be controlled with additional flags, see e.g. <https://github.com/google/sanitizers/wiki/AddressSanitizerFlags>.
 

@@ -36,6 +36,7 @@ set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         # We want to stop all execution when an error occurs. Applies to all sanitizers that supports it, and if the lib has it enabled.
         -fno-sanitize-recover=all
         # To get proper stack traces. Allows the fast unwinder to function properly, get proper debug info in binary.
+        # *SAN_SYMBOLIZER_PATH must be available and point to llvm-symbolizer.
         -fno-omit-frame-pointer)
 
 # UBSAN 
