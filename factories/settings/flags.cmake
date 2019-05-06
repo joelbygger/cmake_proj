@@ -47,8 +47,9 @@ set(MY_EXTRA_LINKER_LIBS ${MY_EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
 if(ASAN) # True if CMake called with -DASAN=1.
     # Should use -01 or higher.
+    # ASAN implicitly activates sanitize=leak.
     message("---- Compiling with address sanitizer.")
-    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=address) # Implicitly activates sanitize=leak.
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=address -fsanitize-address-use-after-scope)
 
     # ASAN must come first in list!
     set(MY_EXTRA_LINKER_LIBS -fsanitize=address ${MY_EXTRA_LINKER_LIBS})
