@@ -13,7 +13,6 @@
 
 * clang tidy & cppcheck valbar köras varje gång eller på flagga
 
-* TSAN
 * MSAN (not done since missing in GCC)
 
 * Clang fuzz lite exempel https://boringssl.googlesource.com/boringssl/+/master/CMakeLists.txt
