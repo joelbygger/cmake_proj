@@ -77,6 +77,7 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
             -Winline -Wuseless-cast
             -Wnon-virtual-dtor -Wold-style-cast -Wcast-align
             -Woverloaded-virtual
+            -Wmissing-declarations -Wshadow
             )
     # I think it can be argued that the warnings below should only be part of Debug build,
     # but I think they can be part of release.
