@@ -40,7 +40,7 @@ set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
         -fno-omit-frame-pointer)
 
 # UBSAN 
-# affects runtime & mem. very little, we let it always be active.
+# effects runtime & mem. very little, we let it always be active.
 set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=undefined)
 set(MY_EXTRA_LINKER_LIBS ${MY_EXTRA_LINKER_LIBS} -fsanitize=undefined)
 
@@ -50,15 +50,14 @@ if(ASAN) # True if CMake called with -DASAN=1.
     message("---- Compiling with address sanitizer.")
     set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=address) # Implicitly activates sanitize=leak.
 
-    # ASAN must come first in list.
+    # ASAN must come first in list!
     set(MY_EXTRA_LINKER_LIBS -fsanitize=address ${MY_EXTRA_LINKER_LIBS})
 endif()
 
 if(TSAN) # True if CMake called with -DTSAN=1.
     # Should use -02 or higher.
     message("---- Compiling with thread sanitizer.")
-    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS}
-            -fsanitize=thread)
+    set(MY_CXX_COMPILE_FLAGS ${MY_CXX_COMPILE_FLAGS} -fsanitize=thread)
 
     set(MY_EXTRA_LINKER_LIBS ${MY_EXTRA_LINKER_LIBS} -fsanitize=thread)
 endif()
