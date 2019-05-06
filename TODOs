@@ -1,4 +1,4 @@
-* ta bort run targets
+* ta bort *_run targets från executables? Eller dokumentera.
 
 * catch add_library andvända fabriken?
 * clang_tidy with clang config
@@ -12,5 +12,11 @@
 * add compile flags for clang? -Weffc++
 
 * clang tidy & cppcheck valbar köras varje gång eller på flagga
-* clang tidy vid gcc behöver ej skriva ut alla filer
-* allt i flags.cmake skall heta my_
+
+* TSAN
+* MSAN (not done since missing in GCC)
+
+* Clang fuzz lite exempel https://boringssl.googlesource.com/boringssl/+/master/CMakeLists.txt
+
+* visibility=hidden on shared libs? Examples and info https://boringssl.googlesource.com/boringssl/+/master/CMakeLists.txt and https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/master/gcc/BUILD.gn More info on https://gcc.gnu.org/wiki/Visibility and https://clang.llvm.org/docs/LTOVisibility.html
+
