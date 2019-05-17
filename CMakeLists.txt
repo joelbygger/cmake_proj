@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.10) # This is a version tested to work, earlier versions probably work as well.
+cmake_minimum_required(VERSION 3.14) # This is a version tested to work, earlier versions probably work as well.
 
-project(cmake_template_cpp_proj
+project(adventOfCode2018
         VERSION 0.0.0
         DESCRIPTION "CMake C++ template project with additional useful tools."
         LANGUAGES CXX)
@@ -14,9 +14,14 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 
-include(cmake/clang_tidy.cmake)
-include(cmake/iwyu.cmake)
-include(cmake/clang_format.cmake)
-include(cmake/target_factory.cmake)
+include(factories/settings/flags.cmake)
+include(factories/utest.cmake)
+include(factories/executable_and_lib.cmake)
+include(external/clang_tidy.cmake)
+include(external/iwyu.cmake)
+include(external/clang_format.cmake)
+include(external/cppcheck.cmake)
 
+add_subdirectory(external/catch2)
+add_subdirectory(testsOfFramework)
 add_subdirectory(src)

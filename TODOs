@@ -1,0 +1,29 @@
+* ta bort *_run targets från executables? Eller dokumentera.
+
+* catch add_library andvända fabriken?
+* clang_tidy with clang config
+
+* The included files (*.cmake) could be CMakeLists.txt files? If not, document why.
+* Change glob usage to something else, if not possible, document why it's used.
+* Add info on revisions of the tools tested (CMake, GCC, Clang, Make?)
+* Check GCC list of sanitizers.
+* some clang tidy checks should be revised
+
+* add compile flags for clang? -Weffc++
+
+* clang tidy & cppcheck valbar köras varje gång eller på flagga
+
+* MSAN (not done since missing in GCC)
+
+* Clang fuzz lite exempel https://boringssl.googlesource.com/boringssl/+/master/CMakeLists.txt
+
+* visibility=hidden on shared libs? Examples and info https://boringssl.googlesource.com/boringssl/+/master/CMakeLists.txt and https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/master/gcc/BUILD.gn More info on https://gcc.gnu.org/wiki/Visibility and https://clang.llvm.org/docs/LTOVisibility.html
+
+
+* Cppcheck
+* cpplint
+* CMake prettify (cmake-format?)
+* Install command
+* Cross compile
+* OpenSSL CMake compilation file example?
+* LWYU (issues with GCC)?

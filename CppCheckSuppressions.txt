@@ -1,0 +1,7 @@
+// This is the CppCheck suppression file, for global suppressions.
+
+// Ignore everything from the Catch2 header.
+// If your run cppcheck with warnings and your target does NOT include the file, you'll get warning:
+//  [*/catch2.hpp]: (information) Unmatched suppression: *
+// which makes sense...
+*:*/catch2.hpp

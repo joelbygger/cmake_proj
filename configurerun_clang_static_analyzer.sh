@@ -22,12 +22,16 @@ cd $DIR
 
 # Prepare all necessary sympbols etc.
 # According to Clangs own documentation we should always run the tool on debug code, see https://clang-analyzer.llvm.org/scan-build.html.
-# NOTE: If you want to use GCC it is possible, but you might get false negatives in e.g. <memory>. 
+# NOTE: If you want to use GCC it is possible, but you might get false negatives in e.g. <memory>.
 # Compiling with Clang is therefore easier.
 $SCAN_BUILD --use-analyzer=$CLANG cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_COMPILER=/usr/bin/clang++-7 ..
 
 #make clean
 
 # And now run the world! I guess it works with command to compile in parallell.
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make app1 -j16
-$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make app2 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day1 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day2 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day3 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day4 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make day5 -j16
+$SCAN_BUILD -analyze-headers --use-analyzer=$CLANG -o $OUTPUT_CLANG_ANALYZE make testTool_main -j16
