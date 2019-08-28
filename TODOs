@@ -19,6 +19,7 @@
 
 * visibility=hidden on shared libs? Examples and info https://boringssl.googlesource.com/boringssl/+/master/CMakeLists.txt and https://chromium.googlesource.com/chromium/src/build/config/+/refs/heads/master/gcc/BUILD.gn More info on https://gcc.gnu.org/wiki/Visibility and https://clang.llvm.org/docs/LTOVisibility.html
 
+* Adapt structure to The Pitchfork Layout (PFL)
 
 * Cppcheck
 * cpplint
