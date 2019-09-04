@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14) # This is a version tested to work, earlier versions probably work as well.
 
-project(adventOfCode2018
+project(cmake_proj
         VERSION 0.0.0
         DESCRIPTION "CMake C++ template project with additional useful tools."
         LANGUAGES CXX)
