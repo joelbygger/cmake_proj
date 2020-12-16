@@ -10,12 +10,13 @@
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
 #        LINK_PUBLIC different target withPublicLinkage
 #        LINK_PRIVATE different target withPrivateLinkage
-#        NO_CPPCHECK trueIfYouDontWantIt)
+#        NO_CPPCHECK trueIfYouDontWantIt
+#        USE_CLANG_TIDY_IF_CLANG_COMPILER trueIfYouWantIt Tidy can generate duplicate warnings if Clang is already compiler, defaults to false)
 ###
 function(set_common_target_stuff)
     # Extract function params.
     set(options)
-    set(oneValueArgs NAME NO_CPPCHECK)
+    set(oneValueArgs NAME NO_CPPCHECK USE_CLANG_TIDY_IF_CLANG_COMPILER)
     set(multiValueArgs SOURCES INCLUDE_PUBLIC INCLUDE_PRIVATE LINK_PUBLIC LINK_PRIVATE)
     cmake_parse_arguments(CMN "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -45,11 +46,14 @@ function(set_common_target_stuff)
     endif()
 
     # Add clang-tidy.
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR 
+        ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" AND CMN_USE_CLANG_TIDY_IF_CLANG_COMPILER))
     add_clang_tidy_to_target(
             NAME ${CMN_NAME}
             SOURCES ${CMN_SOURCES}
             INCLUDE_PUBLIC ${CMN_INCLUDE_PUBLIC}
             INCLUDE_PRIVATE ${CMN_INCLUDE_PRIVATE})
+    endif()
     # Add Include What You Use (IWYU).
     add_iwyu_to_target(NAME ${CMN_NAME})
     # Add Cppcheck.

@@ -17,12 +17,13 @@ include(${CMAKE_CURRENT_LIST_DIR}/helpers/set_common_target_stuff.cmake)
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
 #        LINK_PUBLIC different target withPublicLinkage
 #        LINK_PRIVATE different target withPrivateLinkage
-#        NO_CPPCHECK trueIfYouDontWantIt)
+#        NO_CPPCHECK trueIfYouDontWantIt
+#        USE_CLANG_TIDY_IF_CLANG_COMPILER trueIfYouWantIt Tidy can generate duplicate warnings if Clang is already compiler, defaults to false)
 ###
 function(new_cpp_executable)
     # Extract function params.
     set(options)
-    set(oneValueArgs NAME NO_CPPCHECK)
+    set(oneValueArgs NAME NO_CPPCHECK USE_CLANG_TIDY_IF_CLANG_COMPILER)
     set(multiValueArgs SOURCES INCLUDE_PUBLIC INCLUDE_PRIVATE LINK_PUBLIC LINK_PRIVATE)
     cmake_parse_arguments(EXEC "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -40,7 +41,8 @@ function(new_cpp_executable)
             INCLUDE_PRIVATE ${EXEC_INCLUDE_PRIVATE}
             LINK_PUBLIC ${EXEC_LINK_PUBLIC}
             LINK_PRIVATE ${EXEC_LINK_PRIVATE}
-            NO_CPPCHECK ${EXEC_NO_CPPCHECK})
+            NO_CPPCHECK ${EXEC_NO_CPPCHECK}
+            USE_CLANG_TIDY_IF_CLANG_COMPILER ${EXEC_USE_CLANG_TIDY_IF_CLANG_COMPILER})
 
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         strip_symbols(
@@ -68,12 +70,13 @@ endfunction()
 #        INCLUDE_PRIVATE pathToPrivateIncludeFolder
 #        LINK_PUBLIC different target withPublicLinkage
 #        LINK_PRIVATE different target withPrivateLinkage
-#        NO_CPPCHECK trueIfYouDontWantIt)
+#        NO_CPPCHECK trueIfYouDontWantIt
+#        USE_CLANG_TIDY_IF_CLANG_COMPILER trueIfYouWantIt Tidy can generate duplicate warnings if Clang is already compiler, defaults to false)
 ###
 function(new_cpp_library_shared)
     # Extract function params.
     set(options)
-    set(oneValueArgs NAME NO_CPPCHECK)
+    set(oneValueArgs NAME NO_CPPCHECK USE_CLANG_TIDY_IF_CLANG_COMPILER)
     set(multiValueArgs SOURCES INCLUDE_PUBLIC INCLUDE_PRIVATE LINK_PUBLIC LINK_PRIVATE)
     cmake_parse_arguments(LIB "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
@@ -91,7 +94,8 @@ function(new_cpp_library_shared)
             INCLUDE_PRIVATE ${LIB_INCLUDE_PRIVATE}
             LINK_PUBLIC ${LIB_LINK_PUBLIC}
             LINK_PRIVATE ${LIB_LINK_PRIVATE}
-            NO_CPPCHECK ${LIB_NO_CPPCHECK})
+            NO_CPPCHECK ${LIB_NO_CPPCHECK}
+            USE_CLANG_TIDY_IF_CLANG_COMPILER ${LIB_USE_CLANG_TIDY_IF_CLANG_COMPILER})
 
     if (CMAKE_BUILD_TYPE STREQUAL Release)
         strip_symbols(
