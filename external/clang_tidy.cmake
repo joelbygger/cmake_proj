@@ -47,10 +47,17 @@ else()
     # if it makes sense in your codebase, or if I've missed any, is up to you.
     # A good check, but disabled in THIS project because I don't want to fix it right now.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-cppcoreguidelines-pro-bounds-pointer-arithmetic")
+    # I don't like to enfoce this everywhere, bloats code.
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-modernize-use-trailing-return-type")
     # Default arguments are ok.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-default-arguments")
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-default-arguments-declarations")
+    # I do what I want.
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-trailing-return")
     # We want to be able to overload e.g. operator().
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-overloaded-operator")
+    # 
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-fuchsia-default-arguments-calls")
     # We don't need this style.
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-llvm-header-guard")
     # No need to enforce C++98 backwards compatibility.
@@ -63,6 +70,9 @@ else()
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-google-runtime-references")
     # TODO should I have this? Same as hicpp-explicit-conversions? Explicit on all constructors with one param?
     set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-google-explicit-constructor")
+    # The following two are quite annoying in tests, where one passes in numbers.
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-readability-magic-numbers")
+    set(CLANG_TIDY_CHECKS "${CLANG_TIDY_CHECKS},-cppcoreguidelines-avoid-magic-numbers")
 
 endif()
 
