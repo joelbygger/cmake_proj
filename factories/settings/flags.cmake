@@ -105,6 +105,8 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
             # As long as all warnings works, I'll stick to it, can be changed alter, but easier and maybe safer this way.
             -Weverything
             -Wpedantic
+            # If we are switcing on enum class I still want a default, to handle all cases. 
+            -Wno-covered-switch-default
             # Ignore C++98 backwards compatibility and warnings about classes etc. being being padded.
             -Wno-c++98-compat
             -Wno-c++98-compat-pedantic
